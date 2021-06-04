@@ -1,11 +1,11 @@
 package com.atibusinessgroup.bukutamu.security;
 
-import com.atibusinessgroup.bukutamu.errors.UnlockedException;
-import com.atibusinessgroup.bukutamu.errors.UserLockedException;
-import com.atibusinessgroup.bukutamu.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
@@ -13,19 +13,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import com.atibusinessgroup.bukutamu.errors.UnlockedException;
+import com.atibusinessgroup.bukutamu.errors.UserLockedException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
-
-    @Autowired
-    private UserService userService;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 

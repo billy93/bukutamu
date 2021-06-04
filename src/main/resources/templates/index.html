@@ -35,12 +35,12 @@
 											<label for="nama" class="form-label">Jenis Tamu</label>
 											<div class="form-check">
 												<input id="credit" name="jenis" type="radio"
-													class="form-check-input" checked required> <label
+													class="form-check-input" value="umum" checked required> <label
 													class="form-check-label" for="credit">Umum</label>
 											</div>
 											<div class="form-check">
 												<input id="debit" name="jenis" type="radio"
-													class="form-check-input" required> <label
+													class="form-check-input" value="khusus" required> <label
 													class="form-check-label" for="debit">Khusus</label>
 											</div>
 										</div>
@@ -56,12 +56,12 @@
 											<label for="nama" class="form-label">Jenis Kelamin</label>
 											<div class="form-check">
 												<input id="credit" name="jenisKelamin" type="radio"
-													class="form-check-input" checked required> <label
+													class="form-check-input" value="laki-laki" checked required> <label
 													class="form-check-label" for="credit">Laki-laki</label>
 											</div>
 											<div class="form-check">
 												<input id="debit" name="jenisKelamin" type="radio"
-													class="form-check-input" required> <label
+													class="form-check-input" value="perempuan" required> <label
 													class="form-check-label" for="debit">Perempuan</label>
 											</div>
 										</div>
@@ -70,13 +70,13 @@
 											<label for="nama" class="form-label">Jenis Identitas</label>
 											<div class="form-check">
 												<input id="credit" name="tipeIdentitas" type="radio"
-													class="form-check-input" checked required> <label
+													class="form-check-input" value="ktp" checked required> <label
 													class="form-check-label" for="credit">KTP</label>
 											</div>
 											<div class="form-check">
 												<input id="debit" name="tipeIdentitas" type="radio"
-													class="form-check-input" required> <label
-													class="form-check-label" for="debit">SIM</label>
+													class="form-check-input" value="sim" required> <label
+													class="form-check-label"  for="debit">SIM</label>
 											</div>
 										</div>
 	
@@ -137,15 +137,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-					<td>Laki-laki</td>
-					<td>KTP</td>
-					<td>123213124546</td>
-					<td>TEST</td>
-					<td>ABCDE</td>
-					<td>jokowi</td>
+				<tr th:each="bt, idx : ${bukuTamu}">
+					<th scope="row">[[${idx.index+1}]]</th>
+					<td>[[${bt.nama}]]</td>
+					<td>[[${bt.jenisKelamin}]]</td>
+					<td>[[${bt.tipeIdentitas}]]</td>
+					<td>[[${bt.nomorIdentitas}]]</td>
+					<td>[[${bt.alamat}]]</td>
+					<td>[[${bt.keperluan}]]</td>
+					<td>[[${bt.pihakYgDitemui}]]</td>
 				</tr>
 			</tbody>
 		</table>

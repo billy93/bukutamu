@@ -1,12 +1,20 @@
 package com.atibusinessgroup.bukutamu.controller;
 
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.atibusinessgroup.bukutamu.repo.BukuTamuRepository;
+
 @Controller
 public class BukuTamuController {
 
+	@Autowired
+	private BukuTamuRepository bukuTamuRepository;
+	
 	public static class BukuTamu{
 		private String jenis;
 		private String nama;
@@ -77,6 +85,18 @@ public class BukuTamuController {
 	@PostMapping("/bukutamu")
     public String submitBukuTamu(@ModelAttribute BukuTamu bukuTamu) {
 		System.out.println(bukuTamu);
+		
+		com.atibusinessgroup.bukutamu.model.BukuTamu bt = new com.atibusinessgroup.bukutamu.model.BukuTamu();
+		bt.setId(UUID.randomUUID().toString());
+		bt.setNama(bukuTamu.getNama());
+		bt.setAlamat(bukuTamu.getAlamat());
+		bt.setJenis(bukuTamu.getJenis());
+		bt.setJenisKelamin(bukuTamu.getJenisKelamin());
+		bt.setKeperluan(bukuTamu.getKeperluan());
+		bt.setNomorIdentitas(bukuTamu.getNomorIdentitas());
+		bt.setTipeIdentitas(bukuTamu.getTipeIdentitas());
+		bt.setPihakYgDitemui(bukuTamu.getPihakYgDitemui());
+		bukuTamuRepository.save(bt);
         return "redirect:/index";
     }
 }
