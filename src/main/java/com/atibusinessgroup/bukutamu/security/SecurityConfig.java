@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -27,57 +28,76 @@ import com.atibusinessgroup.bukutamu.service.CustomAuthenticationProvider;
 import com.atibusinessgroup.bukutamu.service.CustomUserTravellerAuthenticationProvider;
 
 @EnableWebSecurity
-@Configuration
-@Order(1)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public SecurityConfig() {
         super();
     }
 
-    @Autowired
-    private CustomAuthenticationProvider authProvider;
-    
-    @Autowired
-    private CustomUserTravellerAuthenticationProvider userTravellerAuthProvider;
-    
-    @Autowired
-    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+//    @Autowired
+//    private CustomAuthenticationProvider authProvider;
+//
+//    @Autowired
+//    private CustomUserTravellerAuthenticationProvider userTravellerAuthProvider;
+//
+//    @Autowired
+//    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+//
+//    @Autowired
+//    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+//
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.authenticationProvider(authProvider);
+//    }
+//
+//    @Bean
+//    @Override
+//    public AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
+//
+//    @Bean
+//    public PasswordEncoder encoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+//
+//    @Bean
+//    public LogoutSuccessHandler logoutSuccessHandler() {
+//        return new CustomizeLogoutSuccessHandler();
+//    }
+//
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        PasswordEncoder encoder =
+//                PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//        auth
+//                .inMemoryAuthentication()
+//                .withUser("admin")
+//                .password("admin")
+////                .password(encoder.encode("admin"))
+//                .roles("ADMIN");
+//    }
 
-    @Autowired
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authProvider);
-    }
-
-    @Bean
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("admin").password("{noop}admin").roles("ADMIN");
     }
 
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public LogoutSuccessHandler logoutSuccessHandler() {
-        return new CustomizeLogoutSuccessHandler();
-    }
-    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
 //    	http.httpBasic().disable();
         http.cors().and()
                 .csrf().disable()
-                .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/login").permitAll()
                 .antMatchers("/appointment").permitAll()
+                .antMatchers("/appointment/approve").permitAll()
+                .antMatchers("/appointment/reject").permitAll()
                 .antMatchers("/bukutamu").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
@@ -85,7 +105,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/")
+                .loginPage("/login")
                 .permitAll()
                 .and()
                 .logout()
@@ -105,12 +125,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
 
 
-    public SimpleAuthenticationFilter authenticationFilter() throws Exception {
-        SimpleAuthenticationFilter filter = new SimpleAuthenticationFilter();
-        filter.setAuthenticationManager(authenticationManagerBean());
-        filter.setAuthenticationFailureHandler(customAuthenticationFailureHandler);
-        filter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
-        return filter;
-    }
+//    public SimpleAuthenticationFilter authenticationFilter() throws Exception {
+//        SimpleAuthenticationFilter filter = new SimpleAuthenticationFilter();
+//        filter.setAuthenticationManager(authenticationManagerBean());
+//        filter.setAuthenticationFailureHandler(customAuthenticationFailureHandler);
+//        filter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler);
+//        return filter;
+//    }
 }
 

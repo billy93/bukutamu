@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:th="http://www.thymeleaf.org" class="js"
+	  xmlns:sec="http://www.w3.org/1999/xhtml"
 	layout:decorate="~{fragments/layout.html}">
 
 <main class="container" layout:fragment="content">
@@ -11,6 +12,12 @@
 				alt="" width="72" height="57">
 			<h2>Buku Tamu</h2>
 			<p class="lead">Silahkan isi buku tamu dibawah ini</p>
+		</div>
+	</div>
+
+	<div class="row mb-3" th:if="${success}">
+		<div class="alert alert-success" role="alert">
+			Buku tamu berhasil diinput
 		</div>
 	</div>
 
@@ -34,12 +41,12 @@
 										<div class="my-3">
 											<label for="nama" class="form-label">Jenis Tamu</label>
 											<div class="form-check">
-												<input id="credit" name="jenis" type="radio"
+												<input name="jenis" type="radio"
 													class="form-check-input" value="umum" checked required> <label
 													class="form-check-label" for="credit">Umum</label>
 											</div>
 											<div class="form-check">
-												<input id="debit" name="jenis" type="radio"
+												<input  name="jenis" type="radio"
 													class="form-check-input" value="khusus" required> <label
 													class="form-check-label" for="debit">Khusus</label>
 											</div>
@@ -122,12 +129,13 @@
 	</div>
 
 
-	<div class="row mb-5">
+	<div class="row mb-5" sec:authorize="isAuthenticated()">
 		<table class="table">
 			<thead>
 				<tr>
 					<th scope="col">#</th>
 					<th scope="col">Nama</th>
+					<th scope="col">Jenis Tamu</th>
 					<th scope="col">Jenis Kelamin</th>
 					<th scope="col">Jenis Identitas</th>
 					<th scope="col">Nomor Identitas</th>
@@ -140,6 +148,7 @@
 				<tr th:each="bt, idx : ${bukuTamu}">
 					<th scope="row">[[${idx.index+1}]]</th>
 					<td>[[${bt.nama}]]</td>
+					<td>[[${bt.jenis}]]</td>
 					<td>[[${bt.jenisKelamin}]]</td>
 					<td>[[${bt.tipeIdentitas}]]</td>
 					<td>[[${bt.nomorIdentitas}]]</td>

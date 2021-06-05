@@ -1,5 +1,6 @@
 package com.atibusinessgroup.bukutamu.controller;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.atibusinessgroup.bukutamu.repo.BukuTamuRepository;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class BukuTamuController {
@@ -16,6 +18,7 @@ public class BukuTamuController {
 	private BukuTamuRepository bukuTamuRepository;
 	
 	public static class BukuTamu{
+		private String id;
 		private String jenis;
 		private String nama;
 		private String jenisKelamin;
@@ -24,6 +27,15 @@ public class BukuTamuController {
 		private String alamat;
 		private String keperluan;
 		private String pihakYgDitemui;
+
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
 		public String getJenis() {
 			return jenis;
 		}
@@ -83,10 +95,11 @@ public class BukuTamuController {
 	}
 	
 	@PostMapping("/bukutamu")
-    public String submitBukuTamu(@ModelAttribute BukuTamu bukuTamu) {
-		System.out.println(bukuTamu);
-		
+    public String submitBukuTamu(@ModelAttribute BukuTamu bukuTamu, RedirectAttributes redirectAttributes) {
 		com.atibusinessgroup.bukutamu.model.BukuTamu bt = new com.atibusinessgroup.bukutamu.model.BukuTamu();
+		if(bukuTamu.getId() != null){
+			bt = bukuTamuRepository.getOne(bukuTamu.getId());
+		}
 		bt.setId(UUID.randomUUID().toString());
 		bt.setNama(bukuTamu.getNama());
 		bt.setAlamat(bukuTamu.getAlamat());
@@ -96,7 +109,10 @@ public class BukuTamuController {
 		bt.setNomorIdentitas(bukuTamu.getNomorIdentitas());
 		bt.setTipeIdentitas(bukuTamu.getTipeIdentitas());
 		bt.setPihakYgDitemui(bukuTamu.getPihakYgDitemui());
+		bt.setCreatedDate(Instant.now());
 		bukuTamuRepository.save(bt);
-        return "redirect:/index";
+
+		redirectAttributes.addFlashAttribute("success", true);
+        return "redirect:/";
     }
 }
