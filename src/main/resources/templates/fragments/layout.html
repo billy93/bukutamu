@@ -45,11 +45,14 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarCollapse">
 			  <ul class="navbar-nav me-auto mb-2 mb-md-0">
+				  <li class="nav-item">
+					  <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/' ? 'active' : ''}" href="/">Beranda</a>
+				  </li>
 				<li class="nav-item">
-				  <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/' ? 'active' : ''}" href="/">Home</a>
+				  <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/guestbook' ? 'active' : ''}" href="/guestbook">Buku Tamu</a>
 				</li>
 				<li class="nav-item">
-				  <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/appointment' ? 'active' : ''}" href="/appointment">Appointment</a>
+				  <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/appointment' ? 'active' : ''}" href="/appointment">Buat Janji</a>
 				</li>
 			  </ul>
 			  <ul class="navbar-nav" sec:authorize="isAuthenticated()">
