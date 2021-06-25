@@ -65,7 +65,7 @@ public class AppointmentController {
         appointment1.setApproved(true);
         appointmentRepository.save(appointment1);
         System.out.println("Approve appointment");
-        return "redirect:/appointment";
+        return "redirect:/appointment/list";
     }
 
     @PostMapping("/appointment/reject")
@@ -74,6 +74,6 @@ public class AppointmentController {
         appointment1.setApproved(false);
         appointmentRepository.save(appointment1);
         System.out.println("Reject appointment");
-        return "redirect:/appointment";
+        return "redirect:/appointment/list";
     }
 }

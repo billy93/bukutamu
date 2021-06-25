@@ -26,6 +26,9 @@
                             <th>Keterangan</th>
                             <th>No HP</th>
                             <th>No Telepon</th>
+                            <th>Tanggal & Jam Janji</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -42,6 +45,21 @@
                             <td>[[${bt.keterangan}]]</td>
                             <td>[[${bt.noHp}]]</td>
                             <td>[[${bt.noTelepon}]]</td>
+                            <td>19/06/2021 09:00</td>
+                            <td>
+                                <span th:if="${bt.approved}">Diterima</span>
+                                <span th:if="${!bt.approved}">Ditolak / Belum diproses</span>
+                            </td>
+                            <td>
+                                <form action="/appointment/approve" method="post">
+                                    <input type="hidden" name="id" th:value="${bt.id}"/>
+                                    <button type="submit" class="button button-xs button-secondary button-nina">Approve</button>
+                                </form>
+                                <form action="/appointment/reject" method="post">
+                                    <input type="hidden" name="id" th:value="${bt.id}"/>
+                                    <button type="submit" class="button button-xs button-secondary button-nina">Reject</button>
+                                </form>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
