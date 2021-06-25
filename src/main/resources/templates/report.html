@@ -8,6 +8,30 @@
 		<!-- Standard Pricing-->
 		<section class="section section-lg bg-default text-center">
 			<div class="container">
+				<h3 class="text-primary">Laporan Bulanan</h3>
+				<div class="row justify-content-sm-center row-xl row-30">
+					<div class="col-md-4">
+						<div class="form-wrap form-wrap-validation">
+							<input class="form-input" id="form-element-date" data-time-picker="date" name="date">
+							<label class="form-label" for="form-element-date">Tanggal Mulai</label>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-wrap form-wrap-validation">
+							<input class="form-input" id="form-element-date" data-time-picker="date" name="date">
+							<label class="form-label" for="form-element-date">Tanggal Selesai</label>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="button button-icon button-icon-left button-secondary button-nina"><span class="icon mdi mdi-magnify"></span>Search</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Standard Pricing-->
+		<section class="section section-lg bg-default text-center">
+			<div class="container">
 				<h3 class="text-primary">STATISTIK JUMLAH TAMU</h3>
 				<div class="row justify-content-sm-center row-xl row-30">
 					<!-- Pricing Box-->
@@ -69,43 +93,6 @@
 				</div>
 			</div>
 		</section>
-
-		<section class="section section-lg bg-default text-center">
-			<div class="container">
-				<div id="chart" style="height: 280px;"></div>
-			</div>
-		</section>
-
-		<section class="section section-lg bg-default text-center">
-			<div class="container">
-				<div id="chart2" style="height: 280px;"></div>
-			</div>
-		</section>
-
-		<section class="section section-lg bg-default text-center">
-			<div class="container">
-				<div id="chart3" style="height: 280px;"></div>
-			</div>
-		</section>
-
-		<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-		<script th:inline="javascript">
-			window.onload = function () {
-
-				var chart = /*[[${grafikTamuTotal}]]*/ {};
-				var chart1 = new CanvasJS.Chart("chart", chart);
-				chart1.render();
-
-				var chart2Data = /*[[${grafikTamu}]]*/ {};
-				var chart2 = new CanvasJS.Chart("chart2", chart2Data);
-				chart2.render();
-
-				var chart3Data = /*[[${grafikStatistikKeperluanTamu}]]*/ {};
-				var chart3 = new CanvasJS.Chart("chart3", chart3Data);
-				chart3.render();
-
-			}
-		</script>
 
 	</div>
 </html>

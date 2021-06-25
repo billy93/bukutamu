@@ -1,183 +1,164 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:th="http://www.thymeleaf.org" class="js"
+	  xmlns:th="http://www.thymeleaf.org" class="js"
 	  xmlns:sec="http://www.w3.org/1999/xhtml"
-	layout:decorate="~{fragments/layout.html}">
+	  layout:decorate="~{fragments/layout.html}">
 
-<main class="container" layout:fragment="content">
+	<section class="section" layout:fragment="content">
+		<div class="swiper-form-wrap">
+			<!-- Swiper-->
+			<div class="swiper-container swiper-slider swiper-slider-custom swiper-slider_height-1 swiper-align-left swiper-align-left-custom context-dark bg-gray-darker" data-loop="true" data-autoplay="5500" data-simulate-touch="true" data-slide-effect="fade">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" data-slide-bg="/images/landing-private-airlines-slider-1.jpg">
+						<div class="swiper-slide-caption">
+							<div class="container container-bigger swiper-main-section">
+								<div class="row justify-content-sm-center justify-content-md-start row-ten">
+									<div class="col-lg-4 col-xl-3 col-xxl-4 text-center text-lg-left">
+										<div class="box-width-3">
+											<h1 class="text-sbold">Selamat Datang di Buku Tamu PA Ponorogo</h1><a class="button button-default-outline button-nina button-sm" href="index.html#">learn more</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide" data-slide-bg="/images/landing-private-airlines-slider-2.jpg">
+						<div class="swiper-slide-caption">
+							<div class="container container-bigger swiper-main-section">
+								<div class="row justify-content-sm-center justify-content-md-start row-ten">
+									<div class="col-lg-5 text-center text-lg-left">
+										<h1 class="text-sbold"></h1><a class="button button-default-outline button-nina button-sm button-top" href="index.html#"></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Swiper controls-->
+				<div class="swiper-pagination-wrap">
+					<div class="container container-bigger">
+						<div class="row row-ten">
+							<div class="col-sm-12">
+								<div class="swiper-pagination"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--Swiper Navigation-->
+				<div class="swiper-button-prev mdi mdi-chevron-left"></div>
+				<div class="swiper-button-next mdi mdi-chevron-right"></div>
+			</div>
+			<div class="container container-bigger form-request-wrap form-request-wrap-modern">
+				<div class="row justify-content-sm-center justify-content-lg-end row-ten">
+					<div class="col-lg-4 col-xxl-4">
+						<div class="form-request form-request-modern bg-gray-lighter">
+							<h4 class="heading-line text-regular ls-1">Isi Buku Tamu</h4>
+							<!-- RD Mailform-->
+							<form class="rd-mailform text-left" data-form-output="form-output-global" data-form-type="contact" action="/bukutamu" method="post">
+								<div class="row row-20">
+									<div class="col-md-6">
+										<label class="form-label-outside">Jenis Tamu</label>
+										<div class="form-wrap">
+											<!-- Select 2-->
+											<select class="form-input select-filter" data-placeholder="All" data-minimum-results-for-search="Infinity" data-constraints="@Required" name="jenis">
+												<option value="">Pilih salah satu</option>
+												<option value="Khusus">Tamu Khusus</option>
+												<option value="Umum">Tamu Umum</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-6"></div>
+									<div class="col-md-6">
+										<label class="form-label-outside">Nama</label>
+										<div class="form-wrap form-wrap-inline">
+											<input class="form-input" id="nama" type="text" name="nama" required/>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<label class="form-label-outside">Jenis Kelamin</label>
+										<div class="form-wrap">
+											<!-- Select 2-->
+											<select class="form-input select-filter" data-placeholder="All" data-minimum-results-for-search="Infinity" data-constraints="@Required" name="jenisKelamin">
+												<option value="">Pilih salah satu</option>
+												<option value="Laki-Laki">Laki-laki</option>
+												<option value="Perempuan">Perempuan</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<label class="form-label-outside">Alamat</label>
+										<div class="form-wrap form-wrap-inline">
+											<input class="form-input" id="alamat" type="text" name="alamat"/>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-wrap form-wrap-validation">
+											<label class="form-label-outside" for="tipeIdentitas">Jenis Tanda Pengenal</label>
+											<select class="form-input select-filter" data-placeholder="All" data-minimum-results-for-search="Infinity" data-constraints="@Required" id="tipeIdentitas" name="tipeIdentitas">
+												<option value="">Pilih salah satu</option>
+												<option value="KTP">KTP</option>
+												<option value="SIM">SIM</option>
+												<option value="Kartu Pelajar">Kartu Pelajar</option>
+												<option value="Passpo">Passpor</option>
+												<option value="Tanda Pengenal Instansi">Tanda Pengenal Instansi</option>
+												<option value="Lainnya">Lainnya</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-wrap form-wrap-validation">
+											<label class="form-label-outside" for="nomorIdentitas">No Tanda Pengenal</label>
+											<input class="form-input" id="nomorIdentitas" type="text" name="nomorIdentitas" data-constraints="@Required">
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<label class="form-label-outside">Pihak yang ditemui</label>
+										<input class="form-input" id="pihakYgDitemui" type="text" name="pihakYgDitemui" data-constraints="@Required">
 
-<!--	<div class="row">-->
-<!--		<div class="col-sm-2">-->
-<!--			<img class="d-block mx-auto mb-4" src="images/logo.png"-->
-<!--				 alt="" width="128" height="164">-->
-<!--		</div>-->
-<!--		<div class="col-sm-10">-->
-<!--			<h2>Mahkamah Agung Republik Indonesia</h2>-->
-<!--			<h2>Pengadilan Agama Ponorogo</h2>-->
-<!--		</div>-->
-<!--	</div>-->
+									</div>
+									<div class="col-md-6">
+										<div class="form-wrap">
+											<label class="form-label-outside" for="keperluan">Keperluan</label>
+											<select class="form-input select-filter" id="keperluan" data-placeholder="All" data-minimum-results-for-search="Infinity" data-constraints="@Required" name="keperluan">
+												<option value="">Pilih salah satu</option>
 
-	<div class="row mb-5">
-		<div class="py-5 text-center">
-			<img class="d-block mx-auto mb-4" src="images/logo.png"
-				alt="" width="128" height="164">
-			<h2>Buku Tamu</h2>
-			<p class="lead">Selamat datang di buku tamu pengadilan agama ponorogo</p>
-		</div>
-	</div>
-
-	<div class="row mb-3" th:if="${success}">
-		<div class="alert alert-success" role="alert">
-			Buku tamu berhasil diinput
-		</div>
-	</div>
-
-	<div class="row mb-5">
-		<div class="accordion accordion-flush" id="accordionExample">
-			<div class="accordion-item">
-				<h2 class="accordion-header" id="headingOne">
-					<button class="accordion-button" type="button"
-						data-bs-toggle="collapse" data-bs-target="#collapseOne"
-						aria-expanded="true" aria-controls="collapseOne">Form Buku Tamu</button>
-				</h2>
-				<div id="collapseOne" class="accordion-collapse collapse"
-					aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-					<div class="accordion-body">
-						<div class="row g-5">
-							<div class="col-md-7 col-lg-8">
-								<h4 class="mb-3">Buku Tamu</h4>
-								<form class="needs-validation" action="/bukutamu" method="post">
-								
-									<div class="row g-3">
-										<div class="my-3">
-											<label for="nama" class="form-label">Jenis Tamu</label>
-											<div class="form-check">
-												<input name="jenis" type="radio"
-													class="form-check-input" value="umum" checked required> <label
-													class="form-check-label" for="credit">Umum</label>
-											</div>
-											<div class="form-check">
-												<input  name="jenis" type="radio"
-													class="form-check-input" value="khusus" required> <label
-													class="form-check-label" for="debit">Khusus</label>
-											</div>
-										</div>
-										
-										<div class="col-sm-6">
-											<label for="nama" class="form-label">Nama</label> <input
-												type="text" class="form-control" id="nama" name="nama" placeholder=""
-												value="" required>
-											<div class="invalid-feedback">Nama harus diisi</div>
-										</div>
-	
-										<div class="my-3">
-											<label for="nama" class="form-label">Jenis Kelamin</label>
-											<div class="form-check">
-												<input id="credit" name="jenisKelamin" type="radio"
-													class="form-check-input" value="laki-laki" checked required> <label
-													class="form-check-label" for="credit">Laki-laki</label>
-											</div>
-											<div class="form-check">
-												<input id="debit" name="jenisKelamin" type="radio"
-													class="form-check-input" value="perempuan" required> <label
-													class="form-check-label" for="debit">Perempuan</label>
-											</div>
-										</div>
-	
-										<div class="my-3">
-											<label for="nama" class="form-label">Jenis Identitas</label>
-											<div class="form-check">
-												<input id="credit" name="tipeIdentitas" type="radio"
-													class="form-check-input" value="ktp" checked required> <label
-													class="form-check-label" for="credit">KTP</label>
-											</div>
-											<div class="form-check">
-												<input id="debit" name="tipeIdentitas" type="radio"
-													class="form-check-input" value="sim" required> <label
-													class="form-check-label"  for="debit">SIM</label>
-											</div>
-										</div>
-	
-										<div class="col-sm-6">
-											<label for="nama" class="form-label">Nomor Identitas</label>
-											<input type="text" class="form-control" name="nomorIdentitas" id="nomorIdentitas"
-												placeholder="" value="" required>
-											<div class="invalid-feedback">Nomor Identitas harus
-												diisi</div>
-										</div>
-	
-										<div class="col-sm-6">
-											<label for="nama" class="form-label">Alamat</label>
-											<textarea class="form-control" name="alamat" id="alamat"></textarea>
-											<div class="invalid-feedback">Alamat</div>
-										</div>
-	
-										<div class="col-sm-6">
-											<label for="nama" class="form-label">Keperluan</label>
-											<select class="form-control" name="keperluan">
 												<option value="Dinas">Dinas</option>
 												<option value="Pribadi">Pribadi</option>
 												<option value="Informasi & Pengaduan">Informasi & Pengaduan</option>
 												<option value="Surat Menyurat">Surat Menyurat</option>
 												<option value="Lainnya">Lainnya</option>
 											</select>
-<!--											<textarea class="form-control" name="keperluan" id="keperluan"></textarea>-->
-<!--											<div class="invalid-feedback">Keperluan</div>-->
 										</div>
-	
-										<div class="col-sm-6">
-											<label for="nama" class="form-label">Pihak yang
-												ditemui</label> <input type="text" class="form-control" id="pihakYgDitemui" name="pihakYgDitemui"
-												placeholder="" value="" required>
-											<div class="invalid-feedback">Pihak yang ditemui harus diisi</div>
-										</div>
-										
-										<hr class="my-4">
-	
-										<button class="w-100 btn btn-primary btn-lg" type="submit">Submit
-											Form</button>
 									</div>
-								</form>
-							</div>
+									<div class="col-md-6">
+										<label class="form-label-outside">Keterangan</label>
+										<div class="form-wrap form-wrap-inline">
+											<input class="form-input" id="forms-3-street-address" type="text" name="keterangan">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-wrap form-wrap-validation">
+											<label class="form-label-outside" for="noHp">No Handphone</label>
+											<input class="form-input" id="noHp" type="text" name="noHp" data-constraints="@Required">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-wrap form-wrap-validation">
+											<label class="form-label-outside" for="noTelepon">No Telepon</label>
+											<input class="form-input" id="noTelepon" type="text" name="noTelepon" data-constraints="@Required">
+										</div>
+									</div>
+									<div class="col-lg-12 offset-custom-4">
+										<div class="form-button">
+											<button class="button button-secondary button-nina" type="submit">Submit</button>
+										</div>
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-
-
-	<div class="row mb-5" sec:authorize="isAuthenticated()">
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Nama</th>
-					<th scope="col">Jenis Tamu</th>
-					<th scope="col">Jenis Kelamin</th>
-					<th scope="col">Jenis Identitas</th>
-					<th scope="col">Nomor Identitas</th>
-					<th scope="col">Alamat</th>
-					<th scope="col">Keperluan</th>
-					<th scope="col">Pihak yang ditemui</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="bt, idx : ${bukuTamu}">
-					<th scope="row">[[${idx.index+1}]]</th>
-					<td>[[${bt.nama}]]</td>
-					<td>[[${bt.jenis}]]</td>
-					<td>[[${bt.jenisKelamin}]]</td>
-					<td>[[${bt.tipeIdentitas}]]</td>
-					<td>[[${bt.nomorIdentitas}]]</td>
-					<td>[[${bt.alamat}]]</td>
-					<td>[[${bt.keperluan}]]</td>
-					<td>[[${bt.pihakYgDitemui}]]</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-
-</main>
-
+	</section>
 </html>

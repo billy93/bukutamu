@@ -31,6 +31,12 @@ public class BukuTamu {
     private String pihakYgDitemui;
     @Column(name = "created_date")
     private Instant createdDate;
+    @Column(name = "keterangan")
+    private String keterangan;
+    @Column(name = "no_hp")
+    private String noHp;
+    @Column(name = "no_telepon")
+    private String noTelepon;
 
     public String getId() {
         return id;
@@ -110,5 +116,29 @@ public class BukuTamu {
 
     public void setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
+    }
+
+    public String getNoHp() {
+        return noHp;
+    }
+
+    public void setNoHp(String noHp) {
+        this.noHp = noHp;
+    }
+
+    public String getNoTelepon() {
+        return noTelepon;
+    }
+
+    public void setNoTelepon(String noTelepon) {
+        this.noTelepon = noTelepon;
     }
 }

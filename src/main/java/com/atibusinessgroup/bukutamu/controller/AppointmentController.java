@@ -23,10 +23,14 @@ public class AppointmentController {
 
     @GetMapping("/appointment")
     public String index(Model model) {
+        return "appointment";
+    }
+
+    @GetMapping("/appointment/list")
+    public String list(Model model){
         List<Appointment> appointment = appointmentRepository.findAll();
         model.addAttribute("appointment", appointment);
-
-        return "appointment";
+        return "appointment-list";
     }
 
     @PostMapping("/appointment")
@@ -45,6 +49,9 @@ public class AppointmentController {
         bt.setTipeIdentitas(appointment.getTipeIdentitas());
         bt.setPihakYgDitemui(appointment.getPihakYgDitemui());
         bt.setJanjiTemuDate(appointment.getJanjiTemuDate());
+        bt.setKeterangan(appointment.getKeterangan());
+        bt.setNoHp(appointment.getNoHp());
+        bt.setNoTelepon(appointment.getNoTelepon());
         bt.setCreatedDate(Instant.now());
         appointmentRepository.save(bt);
 

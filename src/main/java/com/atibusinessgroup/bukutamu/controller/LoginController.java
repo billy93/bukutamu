@@ -12,6 +12,8 @@ import com.atibusinessgroup.bukutamu.model.Appointment;
 import com.atibusinessgroup.bukutamu.model.Chart;
 import com.atibusinessgroup.bukutamu.repo.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,21 +31,24 @@ public class LoginController {
 
     @GetMapping("/")
     public String index(Model model) {
-    	
-    	List<BukuTamu> getBukuTamu = bukuTamuRepository.findAll();
-    	List<Appointment> getAppointment = appointmentRepository.findAll();
-    	model.addAttribute("tamuUmum", getBukuTamu.stream().filter(e -> e.getJenis().contentEquals("umum")).collect(Collectors.toList()).size());
-        model.addAttribute("tamuKhusus", getBukuTamu.stream().filter(e -> e.getJenis().contentEquals("khusus")).collect(Collectors.toList()).size());
-        model.addAttribute("janji", getAppointment.size());
-        model.addAttribute("total", getBukuTamu.size()+getAppointment.size());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            List<BukuTamu> getBukuTamu = bukuTamuRepository.findAll();
+            List<Appointment> getAppointment = appointmentRepository.findAll();
+            model.addAttribute("tamuUmum", getBukuTamu.stream().filter(e -> e.getJenis().contentEquals("Umum")).collect(Collectors.toList()).size());
+            model.addAttribute("tamuKhusus", getBukuTamu.stream().filter(e -> e.getJenis().contentEquals("Khusus")).collect(Collectors.toList()).size());
+            model.addAttribute("janji", getAppointment.size());
+            model.addAttribute("total", getBukuTamu.size()+getAppointment.size());
 
-        Chart grafikTamuTotal = generateGrafikTamuTotal(getBukuTamu);
-        Chart grafikTamu = generateGrafikTamu(getBukuTamu, getAppointment);
-        Chart grafikStatistikKeperluanTamu = generateStatistikKeperluanTamu(getBukuTamu);
-        model.addAttribute("grafikTamuTotal", grafikTamuTotal);
-        model.addAttribute("grafikTamu", grafikTamu);
-        model.addAttribute("grafikStatistikKeperluanTamu", grafikStatistikKeperluanTamu);
-        return "index";
+            Chart grafikTamuTotal = generateGrafikTamuTotal(getBukuTamu);
+            Chart grafikTamu = generateGrafikTamu(getBukuTamu, getAppointment);
+            Chart grafikStatistikKeperluanTamu = generateStatistikKeperluanTamu(getBukuTamu);
+            model.addAttribute("grafikTamuTotal", grafikTamuTotal);
+            model.addAttribute("grafikTamu", grafikTamu);
+            model.addAttribute("grafikStatistikKeperluanTamu", grafikStatistikKeperluanTamu);
+            return "index";
+        }
+        return "redirect:/guestbook";
     }
 
     private Chart generateStatistikKeperluanTamu(List<BukuTamu> bukuTamuList){

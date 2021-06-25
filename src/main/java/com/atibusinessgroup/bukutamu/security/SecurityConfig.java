@@ -98,7 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/appointment").permitAll()
                 .antMatchers("/appointment/approve").permitAll()
                 .antMatchers("/appointment/reject").permitAll()
-                .antMatchers("/bukutamu").permitAll()
+                .antMatchers("/guestbook").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/images/**").permitAll()

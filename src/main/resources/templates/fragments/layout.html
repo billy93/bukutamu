@@ -1,91 +1,107 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-    
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.83.1">
-    <title>Buku Tamu</title>
-    
-
-    <!-- Bootstrap core CSS -->
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-
-    
-    <!-- Custom styles for this template -->
-    <link href="css/form-validation.css" rel="stylesheet">
-	<link href="css/navbar-top-fixed.css" rel="stylesheet">
-	
-    <body class="bg-light">
-		
-		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-		  <div class="container-fluid">
-			<a class="navbar-brand" href="#">Buku Tamu</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-			  <span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarCollapse">
-			  <ul class="navbar-nav me-auto mb-2 mb-md-0">
-				  <li class="nav-item">
-					  <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/' ? 'active' : ''}" href="/">Beranda</a>
-				  </li>
-				<li class="nav-item">
-				  <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/guestbook' ? 'active' : ''}" href="/guestbook">Buku Tamu</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/appointment' ? 'active' : ''}" href="/appointment">Buat Janji</a>
-				</li>
-			  </ul>
-			  <ul class="navbar-nav" sec:authorize="isAuthenticated()">
-				<li class="nav-item">
-					<a class="nav-link">Welcome, Admin</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" href="/logout">Logout</a>
-				</li>
-			  </ul>
-				<ul class="navbar-nav" sec:authorize="isAnonymous()">
-					<li class="nav-item">
-						<a class="nav-link" href="/login">Login</a>
-					</li>
-				</ul>
+	  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" class="wide wow-animation" lang="en">
+<head>
+	<!-- Site Title-->
+	<title>Sistem Buku Tamu - Pengadilan Agama Ponorogo</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700%7CLato:300,400,300italic,700%7CMontserrat:900">
+	<link rel="stylesheet" href="/css/bootstrap.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/fonts.css">
+	<style>.ie-panel{display: none;background: #212121;padding: 10px 0;box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);clear: both;text-align:center;position: relative;z-index: 1;} html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {display: block;}</style>
+</head>
+<body>
+	<!-- Page preloader-->
+	<div class="preloader">
+		<div class="preloader-body">
+			<div class="cssload-container">
+				<div class="cssload-speeding-wheel"></div>
 			</div>
-		  </div>
-		</nav>
-	
-	    
-    	
-        <div class="container">
-            <th:block layout:fragment="content"/>
-        </div>
-        
-        
-		  <footer class="my-5 pt-5 text-muted text-center text-small">
-			<p class="mb-1">&copy; 2017–2021 Buku Tamu</p>
-		  </footer>
-		  
-		  
-    	<script src="js/bootstrap.bundle.min.js"></script>
-		 <script src="js/form-validation.js"></script>
-    </body>
+		</div>
+	</div>
+	<!-- Page-->
+	<div class="page">
+		<!-- Page Header-->
+		<header class="section page-header">
+			<!-- RD Navbar-->
+			<div class="rd-navbar-wrap rd-navbar-corporate">
+				<nav class="rd-navbar" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fullwidth" data-xl-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-xxxl-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-fullwidth" data-xl-device-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-xxxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="130px" data-xl-stick-up-offset="160px" data-stick-up="true">
+					<div class="rd-navbar-inner">
+						<!-- RD Navbar Panel-->
+						<div class="rd-navbar-panel">
+							<!-- RD Navbar Toggle-->
+							<button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+							<!-- RD Navbar Brand-->
+							<div class="rd-navbar-brand">
+								<!--Brand--><a class="brand-name" th:href="@{/}"><img class="logo-default" src="/images/logo.png" alt="" style="width:130px;height:161px;"/><img class="logo-inverse" src="images/logo-inverse-238x49.png" alt="" width="119" height="24"/></a>
+							</div>
+						</div>
+						<div class="rd-navbar-aside-center">
+							<div class="rd-navbar-nav-wrap">
+								<ul class="rd-navbar-nav">
+									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')" th:classappend="${#httpServletRequest.requestURI == '/' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/}">Beranda</a>
+									</li>
+									<li class="rd-nav-item" th:classappend="${#httpServletRequest.requestURI == '/guestbook' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/guestbook}">Buku Tamu</a>
+									</li>
+									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')"  th:classappend="${#httpServletRequest.requestURI == '/guestbook/list' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/guestbook/list}">Daftar Tamu</a>
+									</li>
+									<li class="rd-nav-item" th:classappend="${#httpServletRequest.requestURI == '/appointment' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/appointment}">Buat Janji</a>
+									</li>
+									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')"  th:classappend="${#httpServletRequest.requestURI == '/appointment/list' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/appointment/list}">Daftar Janji</a>
+									</li>
+									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')" th:classappend="${#httpServletRequest.requestURI == '/report' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/report}">Laporan Bulanan</a>
+									</li>
+								</ul>
+							</div>
+							<div class="rd-navbar-aside-right-inner">
+								<!-- RD Navbar Search-->
+							</div>
+						</div>
+						<div class="rd-navbar-aside-right" sec:authorize="isAnonymous()">
+							<a class="button button-sm button-secondary button-nina" th:href="@{/login}">Login</a>
+						</div>
+						<div class="rd-navbar-aside-right" sec:authorize="isAuthenticated()">
+							<a class="button button-sm button-secondary button-nina" th:href="@{/logout}">Log out</a>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</header>
+
+		<th:block layout:fragment="content"/>
+
+		<!--Footer-->
+		<!-- Footer Minimal-->
+		<footer class="section novi-bg novi-bg-img page-footer page-footer-minimal text-center">
+			<div class="container container-wide">
+				<div class="row justify-content-sm-center align-items-md-center row-30">
+					<div class="col-md-10 col-lg-7 col-xl-4 text-xl-left">
+						<!--Brand--><a class="brand-name" href="index.html"><img class="logo-default" src="images/logo-PA.png" alt="" width="119" height="24"/><img class="logo-inverse" src="images/logo--238x49.png" alt="" width="119" height="24"/></a>
+					</div>
+					<div class="col-md-10 col-lg-7 col-xl-4">
+						<p class="rights"><span>&copy;&nbsp;</span><span class="copyright-year"></span><span>&nbsp;</span><span>Pengadilan Agama Ponorogo</span><span>.&nbsp;</span><a href="privacy-policy.html">Privacy Policy</a></p>
+					</div>
+					<div class="col-md-10 col-lg-7 col-xl-4 text-xl-right">
+						<ul class="group-xs group-middle">
+							<li><a class="icon novi-icon icon-md-middle icon-circle icon-secondary-5-filled mdi mdi-facebook" href="index.html#"></a></li>
+							<li><a class="icon novi-icon icon-md-middle icon-circle icon-secondary-5-filled mdi mdi-twitter" href="index.html#"></a></li>
+							<li><a class="icon novi-icon icon-md-middle icon-circle icon-secondary-5-filled mdi mdi-instagram" href="index.html#"></a></li>
+							<li><a class="icon novi-icon icon-md-middle icon-circle icon-secondary-5-filled mdi mdi-google" href="index.html#"></a></li>
+							<li><a class="icon novi-icon icon-md-middle icon-circle icon-secondary-5-filled mdi mdi-linkedin" href="index.html#"></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<!-- Global Mailform Output-->
+	<div class="snackbars" id="form-output-global"></div>
+	<!-- Javascript-->
+	<script src="/js/core.min.js"></script>
+	<script src="/js/script.js"></script>
+</body>
 
 </html>

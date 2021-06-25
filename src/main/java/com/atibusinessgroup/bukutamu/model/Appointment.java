@@ -32,6 +32,12 @@ public class Appointment {
     private String keperluan;
     @Column(name = "pihak_yg_ditemui")
     private String pihakYgDitemui;
+    @Column(name = "keterangan")
+    private String keterangan;
+    @Column(name = "no_hp")
+    private String noHp;
+    @Column(name = "no_telepon")
+    private String noTelepon;
     @Column(name = "janji_temu_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date janjiTemuDate;
@@ -134,5 +140,29 @@ public class Appointment {
 
     public void setApproved(boolean approved) {
         this.approved = approved;
+    }
+
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
+    }
+
+    public String getNoHp() {
+        return noHp;
+    }
+
+    public void setNoHp(String noHp) {
+        this.noHp = noHp;
+    }
+
+    public String getNoTelepon() {
+        return noTelepon;
+    }
+
+    public void setNoTelepon(String noTelepon) {
+        this.noTelepon = noTelepon;
     }
 }

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.atibusinessgroup.bukutamu.repo.BukuTamuRepository;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.Column;
+
 @Controller
 public class BukuTamuController {
 
@@ -31,6 +33,9 @@ public class BukuTamuController {
 		private String alamat;
 		private String keperluan;
 		private String pihakYgDitemui;
+		private String keterangan;
+		private String noHp;
+		private String noTelepon;
 
 		public String getId() {
 			return id;
@@ -88,6 +93,31 @@ public class BukuTamuController {
 		public void setPihakYgDitemui(String pihakYgDitemui) {
 			this.pihakYgDitemui = pihakYgDitemui;
 		}
+
+		public String getKeterangan() {
+			return keterangan;
+		}
+
+		public void setKeterangan(String keterangan) {
+			this.keterangan = keterangan;
+		}
+
+		public String getNoHp() {
+			return noHp;
+		}
+
+		public void setNoHp(String noHp) {
+			this.noHp = noHp;
+		}
+
+		public String getNoTelepon() {
+			return noTelepon;
+		}
+
+		public void setNoTelepon(String noTelepon) {
+			this.noTelepon = noTelepon;
+		}
+
 		@Override
 		public String toString() {
 			return "BukuTamu [jenis=" + jenis + ", nama=" + nama + ", jenisKelamin=" + jenisKelamin + ", tipeIdentitas="
@@ -100,10 +130,14 @@ public class BukuTamuController {
 
 	@GetMapping("/guestbook")
 	public String index(Model model){
+		return "guestbook";
+	}
+
+	@GetMapping("/guestbook/list")
+	public String list(Model model){
 		List<com.atibusinessgroup.bukutamu.model.BukuTamu> getBukuTamu = bukuTamuRepository.findAll();
 		model.addAttribute("bukuTamu", getBukuTamu);
-
-		return "guestbook";
+		return "guestbook-list";
 	}
 
 	@PostMapping("/bukutamu")
@@ -122,9 +156,12 @@ public class BukuTamuController {
 		bt.setTipeIdentitas(bukuTamu.getTipeIdentitas());
 		bt.setPihakYgDitemui(bukuTamu.getPihakYgDitemui());
 		bt.setCreatedDate(Instant.now());
+		bt.setKeterangan(bukuTamu.getKeterangan());
+		bt.setNoHp(bukuTamu.getNoHp());
+		bt.setNoTelepon(bukuTamu.getNoTelepon());
 		bukuTamuRepository.save(bt);
 
 		redirectAttributes.addFlashAttribute("success", true);
-        return "redirect:/";
+        return "redirect:/guestbook";
     }
 }
