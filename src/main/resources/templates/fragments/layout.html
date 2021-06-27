@@ -44,11 +44,11 @@
 								<ul class="rd-navbar-nav">
 									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')" th:classappend="${#httpServletRequest.requestURI == '/' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/}">Beranda</a>
 									</li>
-									<li class="rd-nav-item" th:classappend="${#httpServletRequest.requestURI == '/guestbook' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/guestbook}">Buku Tamu</a>
+									<li class="rd-nav-item" sec:authorize="isAnonymous()" th:classappend="${#httpServletRequest.requestURI == '/guestbook' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/guestbook}">Buku Tamu</a>
 									</li>
 									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')"  th:classappend="${#httpServletRequest.requestURI == '/guestbook/list' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/guestbook/list}">Daftar Tamu</a>
 									</li>
-									<li class="rd-nav-item" th:classappend="${#httpServletRequest.requestURI == '/appointment' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/appointment}">Buat Janji</a>
+									<li class="rd-nav-item" sec:authorize="isAnonymous()" th:classappend="${#httpServletRequest.requestURI == '/appointment' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/appointment}">Buat Janji</a>
 									</li>
 									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')"  th:classappend="${#httpServletRequest.requestURI == '/appointment/list' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/appointment/list}">Daftar Janji</a>
 									</li>
