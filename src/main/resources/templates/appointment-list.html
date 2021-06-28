@@ -4,90 +4,85 @@
       xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{fragments/layout.html}">
 
-<!-- Color Header Row Table-->
-<section class="section section-lg bg-default text-center" layout:fragment="content">
+<form id="searchForm" th:action="@{/appointment/list}" th:object="${searchParam}" method="post" layout:fragment="content">
+    <input type="hidden" id="page" th:field="*{page}"/>
 
-    <form id="searchForm" th:action="@{/appointment/list}" th:object="${searchParam}" method="post">
-        <input type="hidden" id="page" th:field="*{page}"/>
+    <section class="section section-lg bg-default text-center pb-5">
         <div class="container-fullwidth-custom">
+            <h4 class="text-primary">Daftar Janji</h4>
             <div class="row justify-content-sm-center">
-                <div class="col-lg-10 col-xl-10">
-                    <h3 class="text-primary text-uppercase">Daftar Janji</h3>
-
-
-                    <div class="col-lg-10 col-xl-10">
-                        <div class="row justify-content-sm-center">
-                            <div class="col-md-2">
-                                <label class="form-label-outside">JENIS TAMU</label>
-                                <div class="form-wrap">
-                                    <!-- Select 2-->
-                                    <div class="input-group">
-                                        <select type="text" class="form-input" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" data-constraints="@Required" th:field="*{jenis}">
-                                            <option value="">Pilih salah satu</option>
-                                            <option value="Khusus">Tamu Khusus</option>
-                                            <option value="Umum">Tamu Umum</option>
-                                        </select>
-                                        <span class="input-group-text" id="basic-addon1">
-                                <div class="fa fa-chevron-down"></div>
-                              </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label-outside" for="forms-3-name">NAMA</label>
-                                <div class="form-wrap">
-                                    <div class="input-group">
-                                        <input class="form-input" id="forms-3-name" type="text" th:field="*{nama}" data-constraints="@Required">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label-outside" for="forms-3-name">NO TANDA PENGENAL</label>
-                                <div class="form-wrap">
-                                    <div class="input-group">
-                                        <input class="form-input" id="forms-3-name" type="text" th:field="*{nomorIdentitas}" data-constraints="@Required">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label-outside">KEPERLUAN</label>
-                                <div class="form-wrap">
-                                    <div class="input-group">
-                                        <select type="text" class="form-input" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" data-constraints="@Required" th:field="*{keperluan}">
-                                            <option value="">Pilih salah satu</option>
-                                            <option value="Dinas">Dinas</option>
-                                            <option value="Pribadi">Pribadi</option>
-                                            <option value="Informasi & Pengaduan">Informasi & Pengaduan</option>
-                                            <option value="Surat Menyurat">Surat Menyurat</option>
-                                            <option value="Lainnya">Lainnya</option>
-                                        </select>
-                                        <span class="input-group-text" id="basic-addon1">
-                                <div class="fa fa-chevron-down"></div>
-                              </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label-outside" for="forms-3-name">NO HANDPHONE</label>
-                                <div class="form-wrap">
-                                    <div class="input-group">
-                                        <input class="form-input" id="forms-3-name" type="text" th:field="*{noHp}" data-constraints="@Required">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div>
-                                    <button type="submit" class="button button-icon button-icon-left button-secondary button-nina"><span class="icon mdi mdi-magnify"></span>Cari</button>
-                                </div>
-                            </div>
+                <div class="col-md-2">
+                    <label class="form-label-outside">JENIS TAMU</label>
+                    <div class="form-wrap">
+                        <!-- Select 2-->
+                        <div class="input-group">
+                            <select type="text" class="form-input" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" data-constraints="@Required" th:field="*{jenis}">
+                                <option value="">Pilih salah satu</option>
+                                <option value="Khusus">Tamu Khusus</option>
+                                <option value="Umum">Tamu Umum</option>
+                            </select>
+                            <span class="input-group-text" id="basic-addon1">
+                            <div class="fa fa-chevron-down"></div>
+                          </span>
                         </div>
                     </div>
-
-
-                    <div class="col-md-3">
-                        <div class="button button-icon button-icon-left button-secondary button-nina" onclick="exportFile()"><span class="icon fa fa-download"></span>Unduh</div>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label-outside" for="forms-3-name">NAMA</label>
+                    <div class="form-wrap">
+                        <div class="input-group">
+                            <input class="form-input" id="forms-3-name" type="text" th:field="*{nama}" data-constraints="@Required">
+                        </div>
                     </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label-outside" for="forms-3-name">NO TANDA PENGENAL</label>
+                    <div class="form-wrap">
+                        <div class="input-group">
+                            <input class="form-input" id="forms-3-name" type="text" th:field="*{nomorIdentitas}" data-constraints="@Required">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label-outside">KEPERLUAN</label>
+                    <div class="form-wrap">
+                        <div class="input-group">
+                            <select type="text" class="form-input" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" data-constraints="@Required" th:field="*{keperluan}">
+                                <option value="">Pilih salah satu</option>
+                                <option value="Dinas">Dinas</option>
+                                <option value="Pribadi">Pribadi</option>
+                                <option value="Informasi & Pengaduan">Informasi & Pengaduan</option>
+                                <option value="Surat Menyurat">Surat Menyurat</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                            <span class="input-group-text" id="basic-addon1">
+                            <div class="fa fa-chevron-down"></div>
+                          </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label-outside" for="forms-3-name">NO HANDPHONE</label>
+                    <div class="form-wrap">
+                        <div class="input-group">
+                            <input class="form-input" id="forms-3-name" type="text" th:field="*{noHp}" data-constraints="@Required">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="button button-icon button-icon-left button-secondary button-nina button-filter"><span class="icon fa fa-search"></span></button>
+                </div>
+                <div class="col-md-1">
+                    <div class="button button-icon button-icon-left button-default-outline button-nina button-filter" onclick="exportFile()"><span class="icon fa fa-download"></span></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <section class="section section-lg bg-default text-center">
+        <div class="container-fullwidth-custom">
+            <div class="row justify-content-sm-center">
+                <div class="col-md-12">
                     <div class="table-novi table-custom-responsive">
                         <table class="table-custom table-color-header">
                             <thead>
@@ -142,6 +137,7 @@
                             </tbody>
                         </table>
                     </div>
+
                     <div>
                         <div></div>
                         <ul class="pagination-custom">
@@ -168,27 +164,30 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
-    <script th:inline="javascript">
-        var totalPages = /*[[${totalPages}]]*/ 0;
-        function paginationLink(page){
-            if(page < 0){
-                page = 0;
-            }
-            else if(page > totalPages-1){
-                page = totalPages-1;
-            }
-            $('#page').val(page);
-            $('#searchForm').submit();
-        }
 
-        function exportFile(){
-            $("#searchForm").attr("action", "/appointment/list/export");
-            $("#searchForm").submit();
-            $("#searchForm").attr("action", "/appointment/list");
-        }
-    </script>
-</section>
+
+        </div>
+
+        <script th:inline="javascript">
+            var totalPages = /*[[${totalPages}]]*/ 0;
+            function paginationLink(page){
+                if(page < 0){
+                    page = 0;
+                }
+                else if(page > totalPages-1){
+                    page = totalPages-1;
+                }
+                $('#page').val(page);
+                $('#searchForm').submit();
+            }
+
+            function exportFile(){
+                $("#searchForm").attr("action", "/appointment/list/export");
+                $("#searchForm").submit();
+                $("#searchForm").attr("action", "/appointment/list");
+            }
+        </script>
+    </section>
+</form>
 
 </html>
