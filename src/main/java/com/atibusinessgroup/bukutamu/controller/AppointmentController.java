@@ -7,10 +7,15 @@ import com.atibusinessgroup.bukutamu.model.dto.SearchAppointmentListNonOptionalD
 import com.atibusinessgroup.bukutamu.model.dto.SearchGuestbookListDTO;
 import com.atibusinessgroup.bukutamu.model.dto.SearchGuestbookListNonOptionalDTO;
 import com.atibusinessgroup.bukutamu.repo.AppointmentRepository;
+import com.atibusinessgroup.bukutamu.service.ExportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +24,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -31,6 +39,8 @@ public class AppointmentController {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+    @Autowired
+    private ExportService exportService;
 
     @GetMapping("/appointment")
     public String index(Model model) {
@@ -45,11 +55,22 @@ public class AppointmentController {
     @GetMapping("/appointment/list")
     public String list(SearchAppointmentListDTO searchAppointmentListDTO, Model model, HttpSession httpSession){
         Pageable page = PageRequest.of(searchAppointmentListDTO.getPage().get(), searchAppointmentListDTO.getSize().get());
-        Page<Appointment> appointment = appointmentRepository.findAll(page);
+        Page<com.atibusinessgroup.bukutamu.model.Appointment> appointment = appointmentRepository.findAll(
+                searchAppointmentListDTO.getJenis().get(),
+                searchAppointmentListDTO.getNama().get(),
+                searchAppointmentListDTO.getKeperluan().get(),
+                searchAppointmentListDTO.getNoHp().get(),
+                searchAppointmentListDTO.getNomorIdentitas().get(),
+                page);
         model.addAttribute("appointment", appointment.getContent());
 
         SearchAppointmentListNonOptionalDTO searchAppointmentListNonOptionalDTO = new SearchAppointmentListNonOptionalDTO();
         searchAppointmentListNonOptionalDTO.setPage(searchAppointmentListDTO.getPage().get());
+        searchAppointmentListNonOptionalDTO.setJenis(searchAppointmentListDTO.getJenis().get());
+        searchAppointmentListNonOptionalDTO.setNama(searchAppointmentListDTO.getNama().get());
+        searchAppointmentListNonOptionalDTO.setKeperluan(searchAppointmentListDTO.getKeperluan().get());
+        searchAppointmentListNonOptionalDTO.setNoHp(searchAppointmentListDTO.getNoHp().get());
+        searchAppointmentListNonOptionalDTO.setNomorIdentitas(searchAppointmentListDTO.getNomorIdentitas().get());
         model.addAttribute("searchParam", searchAppointmentListNonOptionalDTO);
 
         int totalData = Integer.parseInt((appointment.getTotalElements())+"");
@@ -84,6 +105,30 @@ public class AppointmentController {
         String showingData = from + "-" + to;
         model.addAttribute("showingData", showingData);
         return "appointment-list";
+    }
+
+    @PostMapping("/appointment/list/export")
+    public ResponseEntity<Resource> exportPolicyList(SearchAppointmentListDTO searchAppointmentListDTO) throws IOException {
+        Pageable page = PageRequest.of(searchAppointmentListDTO.getPage().get(), searchAppointmentListDTO.getSize().get());
+
+        Page<com.atibusinessgroup.bukutamu.model.Appointment> getAppointment = appointmentRepository.findAll(
+                searchAppointmentListDTO.getJenis().get(),
+                searchAppointmentListDTO.getNama().get(),
+                searchAppointmentListDTO.getKeperluan().get(),
+                searchAppointmentListDTO.getNoHp().get(),
+                searchAppointmentListDTO.getNomorIdentitas().get(),
+                page);
+        Resource file = exportService.exportAppointment(getAppointment.getContent());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String filename = "Janji_"+sdf.format(new Date())+".xlsx";
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\""+filename+"\"")
+                .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+//                .contentType(MediaType.APPLICATION_PDF)
+                .contentLength(file.contentLength())
+                .body(file);
     }
 
     @PostMapping("/appointment")

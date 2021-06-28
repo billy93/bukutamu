@@ -1,22 +1,25 @@
 package com.atibusinessgroup.bukutamu.controller;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.atibusinessgroup.bukutamu.model.BukuTamu;
 import com.atibusinessgroup.bukutamu.model.dto.SearchGuestbookListDTO;
 import com.atibusinessgroup.bukutamu.model.dto.SearchGuestbookListNonOptionalDTO;
+import com.atibusinessgroup.bukutamu.service.ExportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.atibusinessgroup.bukutamu.repo.BukuTamuRepository;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -29,7 +32,9 @@ public class BukuTamuController {
 
 	@Autowired
 	private BukuTamuRepository bukuTamuRepository;
-	
+	@Autowired
+	private ExportService exportService;
+
 	public static class BukuTamu{
 		private String id;
 		private String jenis;
@@ -145,15 +150,50 @@ public class BukuTamuController {
 		return list(searchGuestbookListDTO, model, httpSession);
 	}
 
+	@PostMapping("/guestbook/list/export")
+	public ResponseEntity<Resource> exportPolicyList(SearchGuestbookListDTO searchGuestbookListDTO) throws IOException {
+		Pageable page = PageRequest.of(searchGuestbookListDTO.getPage().get(), searchGuestbookListDTO.getSize().get());
+
+		Page<com.atibusinessgroup.bukutamu.model.BukuTamu> getBukuTamu = bukuTamuRepository.findAll(
+				searchGuestbookListDTO.getJenis().get(),
+				searchGuestbookListDTO.getNama().get(),
+				searchGuestbookListDTO.getKeperluan().get(),
+				searchGuestbookListDTO.getNoHp().get(),
+				searchGuestbookListDTO.getNomorIdentitas().get(),
+				page);
+		Resource file = exportService.exportBukuTamu(getBukuTamu.getContent());
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String filename = "BukuTamu_"+sdf.format(new Date())+".xlsx";
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION,
+						"attachment; filename=\""+filename+"\"")
+				.contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+//                .contentType(MediaType.APPLICATION_PDF)
+				.contentLength(file.contentLength())
+				.body(file);
+	}
+
 	@GetMapping("/guestbook/list")
 	public String list(SearchGuestbookListDTO searchGuestbookListDTO, Model model, HttpSession httpSession){
 		Pageable page = PageRequest.of(searchGuestbookListDTO.getPage().get(), searchGuestbookListDTO.getSize().get());
-		Page<com.atibusinessgroup.bukutamu.model.BukuTamu> getBukuTamu = bukuTamuRepository.findAll(page);
+		Page<com.atibusinessgroup.bukutamu.model.BukuTamu> getBukuTamu = bukuTamuRepository.findAll(
+				searchGuestbookListDTO.getJenis().get(),
+				searchGuestbookListDTO.getNama().get(),
+				searchGuestbookListDTO.getKeperluan().get(),
+				searchGuestbookListDTO.getNoHp().get(),
+				searchGuestbookListDTO.getNomorIdentitas().get(),
+				page);
 		model.addAttribute("bukuTamu", getBukuTamu.getContent());
 
-		SearchGuestbookListNonOptionalDTO searchClaimListNonOptionalDTO = new SearchGuestbookListNonOptionalDTO();
-		searchClaimListNonOptionalDTO.setPage(searchGuestbookListDTO.getPage().get());
-		model.addAttribute("searchParam", searchClaimListNonOptionalDTO);
+		SearchGuestbookListNonOptionalDTO searchGuestbookListNonOptionalDTO = new SearchGuestbookListNonOptionalDTO();
+		searchGuestbookListNonOptionalDTO.setPage(searchGuestbookListDTO.getPage().get());
+		searchGuestbookListNonOptionalDTO.setJenis(searchGuestbookListDTO.getJenis().get());
+		searchGuestbookListNonOptionalDTO.setNama(searchGuestbookListDTO.getNama().get());
+		searchGuestbookListNonOptionalDTO.setKeperluan(searchGuestbookListDTO.getKeperluan().get());
+		searchGuestbookListNonOptionalDTO.setNoHp(searchGuestbookListDTO.getNoHp().get());
+		searchGuestbookListNonOptionalDTO.setNomorIdentitas(searchGuestbookListDTO.getNomorIdentitas().get());
+		model.addAttribute("searchParam", searchGuestbookListNonOptionalDTO);
 
 		int totalData = Integer.parseInt((getBukuTamu.getTotalElements())+"");
 

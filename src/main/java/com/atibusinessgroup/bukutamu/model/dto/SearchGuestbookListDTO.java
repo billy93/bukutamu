@@ -10,26 +10,13 @@ public class SearchGuestbookListDTO implements Serializable {
 
     private Optional<Integer> page = Optional.ofNullable(0);
     private Optional<Integer> size = Optional.ofNullable(10);
-    private Optional<String> claimNumber =  Optional.of("");
-    private Optional<String> policyNumber =  Optional.of("");
-    private Optional<String> travelAgent =  Optional.of("");
-    private Optional<String> travellerName =  Optional.of("");
-    private Optional<String> claimType =  Optional.of("");
-    private Optional<String> claimStatus =  Optional.of("");
+    private Optional<String> jenis =  Optional.of("");
+    private Optional<String> nama =  Optional.of("");
+    private Optional<String> nomorIdentitas =  Optional.of("");
+    private Optional<String> keperluan =  Optional.of("");
+    private Optional<String> noHp =  Optional.of("");
 
-    @DateTimeFormat(pattern = "dd MMM yyyy")
-    private Date submittedDate = null;
-
-    
-    public Optional<String> getClaimNumber() {
-		return claimNumber;
-	}
-
-	public void setClaimNumber(Optional<String> claimNumber) {
-		this.claimNumber = claimNumber;
-	}
-
-	public Optional<Integer> getPage() {
+    public Optional<Integer> getPage() {
         return page;
     }
 
@@ -45,66 +32,43 @@ public class SearchGuestbookListDTO implements Serializable {
         this.size = size;
     }
 
-    public Optional<String> getPolicyNumber() {
-        return policyNumber;
+    public Optional<String> getJenis() {
+        return jenis;
     }
 
-    public void setPolicyNumber(Optional<String> policyNumber) {
-        this.policyNumber = policyNumber;
+    public void setJenis(Optional<String> jenis) {
+        this.jenis = jenis;
     }
 
-    public Optional<String> getTravelAgent() {
-        return travelAgent;
+    public Optional<String> getNama() {
+        return nama;
     }
 
-    public void setTravelAgent(Optional<String> travelAgent) {
-        this.travelAgent = travelAgent;
+    public void setNama(Optional<String> nama) {
+        this.nama = nama;
     }
 
-    public Optional<String> getTravellerName() {
-        return travellerName;
+    public Optional<String> getNomorIdentitas() {
+        return nomorIdentitas;
     }
 
-    public void setTravellerName(Optional<String> travellerName) {
-        this.travellerName = travellerName;
+    public void setNomorIdentitas(Optional<String> nomorIdentitas) {
+        this.nomorIdentitas = nomorIdentitas;
     }
 
-    public Optional<String> getClaimType() {
-        return claimType;
+    public Optional<String> getKeperluan() {
+        return keperluan;
     }
 
-    public void setClaimType(Optional<String> claimType) {
-        this.claimType = claimType;
+    public void setKeperluan(Optional<String> keperluan) {
+        this.keperluan = keperluan;
     }
 
-    public Optional<String> getClaimStatus() {
-        return claimStatus;
+    public Optional<String> getNoHp() {
+        return noHp;
     }
 
-    public void setClaimStatus(Optional<String> claimStatus) {
-        this.claimStatus = claimStatus;
-    }
-
-    public Date getSubmittedDate() {
-        return submittedDate;
-    }
-
-    public void setSubmittedDate(Date submittedDate) {
-        this.submittedDate = submittedDate;
-    }
-
-
-    @Override
-    public String toString() {
-        return "SearchClaimListDTO{" +
-            "page=" + page +
-            ", size=" + size +
-            ", policyNumber=" + policyNumber +
-            ", travelAgent=" + travelAgent +
-            ", travellerName=" + travellerName +
-            ", claimType=" + claimType +
-            ", claimStatus=" + claimStatus +
-            ", submittedDate=" + submittedDate +
-            '}';
+    public void setNoHp(Optional<String> noHp) {
+        this.noHp = noHp;
     }
 }

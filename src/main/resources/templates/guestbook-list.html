@@ -23,10 +23,10 @@
                                 <div class="form-wrap">
                                     <!-- Select 2-->
                                     <div class="input-group">
-                                        <select type="text" class="form-input" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" data-constraints="@Required" name="jenis-tamu">
+                                        <select type="text" class="form-input" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" data-constraints="@Required" th:field="*{jenis}">
                                             <option value="">Pilih salah satu</option>
-                                            <option value="khusus">Tamu Khusus</option>
-                                            <option value="umum">Tamu Umum</option>
+                                            <option value="Khusus">Tamu Khusus</option>
+                                            <option value="Umum">Tamu Umum</option>
                                         </select>
                                         <span class="input-group-text" id="basic-addon1">
                                 <div class="fa fa-chevron-down"></div>
@@ -38,7 +38,7 @@
                                 <label class="form-label-outside" for="forms-3-name">NAMA</label>
                                 <div class="form-wrap">
                                     <div class="input-group">
-                                        <input class="form-input" id="forms-3-name" type="text" name="no-telepon" data-constraints="@Required">
+                                        <input class="form-input" id="forms-3-name" type="text" th:field="*{nama}" data-constraints="@Required">
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                                 <label class="form-label-outside" for="forms-3-name">NO TANDA PENGENAL</label>
                                 <div class="form-wrap">
                                     <div class="input-group">
-                                        <input class="form-input" id="forms-3-name" type="text" name="no-handphone" data-constraints="@Required">
+                                        <input class="form-input" id="forms-3-name" type="text" th:field="*{nomorIdentitas}" data-constraints="@Required">
                                     </div>
                                 </div>
                             </div>
@@ -54,13 +54,13 @@
                                 <label class="form-label-outside">KEPERLUAN</label>
                                 <div class="form-wrap">
                                     <div class="input-group">
-                                        <select type="text" class="form-input" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" data-constraints="@Required" name="keperluan">
-                                            <option value="1">Pilih salah satu</option>
-                                            <option value="2">Dinas</option>
-                                            <option value="3">Pribadi</option>
-                                            <option value="4">Informasi dan Pengaduan</option>
-                                            <option value="5">Surat Menyurat (Bagian Umum)</option>
-                                            <option value="6">Lainnya</option>
+                                        <select type="text" class="form-input" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" data-constraints="@Required" th:field="*{keperluan}">
+                                            <option value="">Pilih salah satu</option>
+                                            <option value="Dinas">Dinas</option>
+                                            <option value="Pribadi">Pribadi</option>
+                                            <option value="Informasi & Pengaduan">Informasi & Pengaduan</option>
+                                            <option value="Surat Menyurat">Surat Menyurat</option>
+                                            <option value="Lainnya">Lainnya</option>
                                         </select>
                                         <span class="input-group-text" id="basic-addon1">
                                 <div class="fa fa-chevron-down"></div>
@@ -72,18 +72,20 @@
                                 <label class="form-label-outside" for="forms-3-name">NO HANDPHONE</label>
                                 <div class="form-wrap">
                                     <div class="input-group">
-                                        <input class="form-input" id="forms-3-name" type="text" name="no-telepon" data-constraints="@Required">
+                                        <input class="form-input" id="forms-3-name" type="text" th:field="*{noHp}" data-constraints="@Required">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <div class="button button-icon button-icon-left button-secondary button-nina"><span class="icon mdi mdi-magnify"></span>Cari</div>
+                                <div>
+                                    <button type="submit" class="button button-icon button-icon-left button-secondary button-nina"><span class="icon mdi mdi-magnify"></span>Cari</button>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <div class="button button-icon button-icon-left button-secondary button-nina"><span class="icon fa fa-download"></span>Unduh</div>
+                        <div class="button button-icon button-icon-left button-secondary button-nina" onclick="exportFile()"><span class="icon fa fa-download"></span>Unduh</div>
                     </div>
 
                     <div class="table-novi table-custom-responsive">
@@ -162,6 +164,12 @@
             }
             $('#page').val(page);
             $('#searchForm').submit();
+        }
+
+        function exportFile(){
+            $("#searchForm").attr("action", "/guestbook/list/export");
+            $("#searchForm").submit();
+            $("#searchForm").attr("action", "/guestbook/list");
         }
     </script>
 </section>

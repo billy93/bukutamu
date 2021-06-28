@@ -10,24 +10,13 @@ public class SearchAppointmentListNonOptionalDTO implements Serializable {
     private Integer page = 0;
     private Integer size = 10;
 
-    private String claimNumber = "";
-    private String policyNumber = "";
-    private String travellerName = "";
-    private String claimType = "";
-    private String claimStatus = "";
-    @DateTimeFormat(pattern = "dd MMM yyyy")
-    private Date submittedDate;
+    private String jenis = "";
+    private String nama = "";
+    private String nomorIdentitas = "";
+    private String keperluan = "";
+    private String noHp = "";
 
-    
-    public String getClaimNumber() {
-		return claimNumber;
-	}
-
-	public void setClaimNumber(String claimNumber) {
-		this.claimNumber = claimNumber;
-	}
-
-	public Integer getPage() {
+    public Integer getPage() {
         return page;
     }
 
@@ -43,43 +32,43 @@ public class SearchAppointmentListNonOptionalDTO implements Serializable {
         this.size = size;
     }
 
-    public String getPolicyNumber() {
-        return policyNumber;
+    public String getJenis() {
+        return jenis;
     }
 
-    public void setPolicyNumber(String policyNumber) {
-        this.policyNumber = policyNumber;
+    public void setJenis(String jenis) {
+        this.jenis = jenis;
     }
 
-    public String getTravellerName() {
-        return travellerName;
+    public String getNama() {
+        return nama;
     }
 
-    public void setTravellerName(String travellerName) {
-        this.travellerName = travellerName;
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
-    public String getClaimType() {
-        return claimType;
+    public String getNomorIdentitas() {
+        return nomorIdentitas;
     }
 
-    public void setClaimType(String claimType) {
-        this.claimType = claimType;
+    public void setNomorIdentitas(String nomorIdentitas) {
+        this.nomorIdentitas = nomorIdentitas;
     }
 
-    public String getClaimStatus() {
-        return claimStatus;
+    public String getKeperluan() {
+        return keperluan;
     }
 
-    public void setClaimStatus(String claimStatus) {
-        this.claimStatus = claimStatus;
+    public void setKeperluan(String keperluan) {
+        this.keperluan = keperluan;
     }
 
-    public Date getSubmittedDate() {
-        return submittedDate;
+    public String getNoHp() {
+        return noHp;
     }
 
-    public void setSubmittedDate(Date submittedDate) {
-        this.submittedDate = submittedDate;
+    public void setNoHp(String noHp) {
+        this.noHp = noHp;
     }
 }
