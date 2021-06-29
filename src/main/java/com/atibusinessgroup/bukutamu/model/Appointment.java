@@ -2,10 +2,7 @@ package com.atibusinessgroup.bukutamu.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
 
@@ -45,6 +42,10 @@ public class Appointment {
     private Instant createdDate;
     @Column(name = "approved")
     private boolean approved;
+    @Transient
+    private String tanggal;
+    @Transient
+    private String jam;
 
     public String getId() {
         return id;
@@ -164,5 +165,44 @@ public class Appointment {
 
     public void setNoTelepon(String noTelepon) {
         this.noTelepon = noTelepon;
+    }
+
+    public String getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
+
+    public String getJam() {
+        return jam;
+    }
+
+    public void setJam(String jam) {
+        this.jam = jam;
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "id='" + id + '\'' +
+                ", jenis='" + jenis + '\'' +
+                ", nama='" + nama + '\'' +
+                ", jenisKelamin='" + jenisKelamin + '\'' +
+                ", tipeIdentitas='" + tipeIdentitas + '\'' +
+                ", nomorIdentitas='" + nomorIdentitas + '\'' +
+                ", alamat='" + alamat + '\'' +
+                ", keperluan='" + keperluan + '\'' +
+                ", pihakYgDitemui='" + pihakYgDitemui + '\'' +
+                ", keterangan='" + keterangan + '\'' +
+                ", noHp='" + noHp + '\'' +
+                ", noTelepon='" + noTelepon + '\'' +
+                ", janjiTemuDate=" + janjiTemuDate +
+                ", createdDate=" + createdDate +
+                ", approved=" + approved +
+                ", tanggal='" + tanggal + '\'' +
+                ", jam='" + jam + '\'' +
+                '}';
     }
 }

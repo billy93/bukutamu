@@ -1481,7 +1481,7 @@
 
 				if (options.date) {
 					options.format = 'DD-MM-YYYY';
-					options.minDate = new Date();
+					//options.minDate = new Date();
 				} else if (options.time) {
 					options.format = 'HH:mm';
 				} else {

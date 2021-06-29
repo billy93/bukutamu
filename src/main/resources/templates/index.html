@@ -5,10 +5,73 @@
 	  layout:decorate="~{fragments/layout.html}">
 
 	<div layout:fragment="content">
-		<!-- Standard Pricing-->
 		<section class="section section-lg bg-default text-center">
 			<div class="container">
-				<h3 class="text-primary">STATISTIK JUMLAH TAMU</h3>
+				<h3 class="text-primary">STATISTIK JUMLAH TAMU BULAN [[${bulan}]]</h3>
+				<div class="row justify-content-sm-center row-xl row-30">
+					<!-- Pricing Box-->
+					<div class="col-md-6 col-xl-3">
+						<div class="pricing-box pricing-box-novi">
+							<div class="pricing-box-header">
+								<h4>TAMU UMUM</h4>
+							</div>
+							<div class="pricing-box-body">
+								<div class="pricing-box-price">
+									<div class="heading-2">[[${tamuUmumCurrent}]]</div>
+									<h5>TAMU</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Pricing Box-->
+					<div class="col-md-6 col-xl-3">
+						<div class="pricing-box pricing-box-novi">
+							<div class="pricing-box-header">
+								<h4>TAMU KHUSUS</h4>
+							</div>
+							<div class="pricing-box-body">
+								<div class="pricing-box-price">
+									<div class="heading-2">[[${tamuKhususCurrent}]]</div>
+									<h5>TAMU</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Pricing Box-->
+					<div class="col-md-6 col-xl-3">
+						<div class="pricing-box pricing-box-novi">
+							<div class="pricing-box-header">
+								<h4>JANJI</h4>
+							</div>
+							<div class="pricing-box-body">
+								<div class="pricing-box-price">
+									<div class="heading-2">[[${janjiCurrent}]]</div>
+									<h5>TAMU</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Pricing Box-->
+					<div class="col-md-6 col-xl-3">
+						<div class="pricing-box pricing-box-novi">
+							<div class="pricing-box-header">
+								<h4>JUMLAH TOTAL</h4>
+							</div>
+							<div class="pricing-box-body">
+								<div class="pricing-box-price">
+									<div class="heading-2">[[${totalCurrent}]]</div>
+									<h5>TAMU</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="section section-lg bg-default text-center">
+			<div class="container">
+				<h3 class="text-primary">STATISTIK JUMLAH TAMU TOTAL</h3>
 				<div class="row justify-content-sm-center row-xl row-30">
 					<!-- Pricing Box-->
 					<div class="col-md-6 col-xl-3">

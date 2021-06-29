@@ -1,9 +1,11 @@
 package com.atibusinessgroup.bukutamu.controller;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneId;
+import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalField;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,6 +41,55 @@ public class LoginController {
             model.addAttribute("tamuKhusus", getBukuTamu.stream().filter(e -> e.getJenis().contentEquals("Khusus")).collect(Collectors.toList()).size());
             model.addAttribute("janji", getAppointment.size());
             model.addAttribute("total", getBukuTamu.size()+getAppointment.size());
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM");
+            Date now = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(now);
+
+            String bulan = simpleDateFormat.format(now);
+            model.addAttribute("bulan", bulan);
+
+            int month = calendar.get(Calendar.MONTH);
+
+            int janjiSize = getAppointment.stream().filter(e -> {
+                Date x = Date.from(e.getCreatedDate());
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(x);
+                int curMonth = cal.get(Calendar.MONTH);
+                if(curMonth == month)
+                    return true;
+                return false;
+            }).collect(Collectors.toList()).size();
+            int bukuTamuSize = getBukuTamu.stream().filter(e -> {
+                Date x = Date.from(e.getCreatedDate());
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(x);
+                int curMonth = cal.get(Calendar.MONTH);
+                if(curMonth == month)
+                    return true;
+                return false;
+            }).collect(Collectors.toList()).size();
+            model.addAttribute("tamuUmumCurrent", getBukuTamu.stream().filter(e -> {
+                Date x = Date.from(e.getCreatedDate());
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(x);
+                int curMonth = cal.get(Calendar.MONTH);
+                if(curMonth == month && e.getJenis().contentEquals("Umum"))
+                    return true;
+                return false;
+            }).collect(Collectors.toList()).size());
+            model.addAttribute("tamuKhususCurrent", getBukuTamu.stream().filter(e -> {
+                Date x = Date.from(e.getCreatedDate());
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(x);
+                int curMonth = cal.get(Calendar.MONTH);
+                if(curMonth == month && e.getJenis().contentEquals("Khusus"))
+                    return true;
+                return false;
+            }).collect(Collectors.toList()).size());
+            model.addAttribute("janjiCurrent", janjiSize);
+            model.addAttribute("totalCurrent", bukuTamuSize+janjiSize);
 
             Chart grafikTamuTotal = generateGrafikTamuTotal(getBukuTamu);
             Chart grafikTamu = generateGrafikTamu(getBukuTamu, getAppointment);

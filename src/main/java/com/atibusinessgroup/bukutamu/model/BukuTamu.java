@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.Instant;
+import java.util.Date;
 
 @Entity
 @Table(name = "buku_tamu")
@@ -141,4 +142,6 @@ public class BukuTamu {
     public void setNoTelepon(String noTelepon) {
         this.noTelepon = noTelepon;
     }
+
+
 }

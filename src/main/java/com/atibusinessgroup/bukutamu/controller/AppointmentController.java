@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -151,6 +152,16 @@ public class AppointmentController {
         bt.setNoHp(appointment.getNoHp());
         bt.setNoTelepon(appointment.getNoTelepon());
         bt.setCreatedDate(Instant.now());
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
+        try {
+            Date janjiTemuDate = simpleDateFormat.parse(appointment.getTanggal()+" "+appointment.getJam());
+            bt.setJanjiTemuDate(janjiTemuDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         appointmentRepository.save(bt);
 
         redirectAttributes.addFlashAttribute("success", true);

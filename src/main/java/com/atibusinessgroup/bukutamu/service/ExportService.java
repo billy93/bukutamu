@@ -131,6 +131,8 @@ public class ExportService {
         header.getCell(9).setCellStyle(style);
         header.createCell(10).setCellValue("No Telepon");
         header.getCell(10).setCellStyle(style);
+        header.createCell(11).setCellValue("Tgl & Jam Janji");
+        header.getCell(11).setCellStyle(style);
 
         int rowCount = 1;
 
@@ -147,6 +149,11 @@ public class ExportService {
             userRow.createCell(8).setCellValue(appointment.getKeterangan());
             userRow.createCell(9).setCellValue(appointment.getNoHp());
             userRow.createCell(10).setCellValue(appointment.getNoTelepon());
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
+            if(appointment.getJanjiTemuDate() != null){
+                userRow.createCell(11).setCellValue(simpleDateFormat.format(appointment.getJanjiTemuDate()));
+            }
         }
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();

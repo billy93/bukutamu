@@ -42,17 +42,17 @@
 						<div class="rd-navbar-aside-center">
 							<div class="rd-navbar-nav-wrap">
 								<ul class="rd-navbar-nav">
-									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')" th:classappend="${#httpServletRequest.requestURI == '/' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/}">Beranda</a>
+									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')" th:classappend="${#httpServletRequest.requestURI == '/' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/}"><span class="fa fa-home"></span> Beranda</a>
 									</li>
-									<li class="rd-nav-item" sec:authorize="isAnonymous()" th:classappend="${#httpServletRequest.requestURI == '/guestbook' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/guestbook}">Buku Tamu</a>
+									<li class="rd-nav-item" sec:authorize="isAnonymous()" th:classappend="${#httpServletRequest.requestURI == '/guestbook' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/guestbook}"><span class="fa fa-address-book-o"></span> Buku Tamu</a>
 									</li>
-									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')"  th:classappend="${#httpServletRequest.requestURI == '/guestbook/list' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/guestbook/list}">Daftar Tamu</a>
+									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')"  th:classappend="${#httpServletRequest.requestURI == '/guestbook/list' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/guestbook/list}"><span class="fa fa-address-book-o"></span> Daftar Tamu</a>
 									</li>
-									<li class="rd-nav-item" sec:authorize="isAnonymous()" th:classappend="${#httpServletRequest.requestURI == '/appointment' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/appointment}">Buat Janji</a>
+									<li class="rd-nav-item" sec:authorize="isAnonymous()" th:classappend="${#httpServletRequest.requestURI == '/appointment' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/appointment}"><span class="fa fa-calendar-plus-o"></span> Buat Janji</a>
 									</li>
-									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')"  th:classappend="${#httpServletRequest.requestURI == '/appointment/list' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/appointment/list}">Daftar Janji</a>
+									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')"  th:classappend="${#httpServletRequest.requestURI == '/appointment/list' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/appointment/list}"><span class="fa fa-calendar-plus-o"></span> Daftar Janji</a>
 									</li>
-									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')" th:classappend="${#httpServletRequest.requestURI == '/report' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/report}">Laporan Bulanan</a>
+									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')" th:classappend="${#httpServletRequest.requestURI == '/report' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/report}"><span class="fa fa-table"></span> Laporan</a>
 									</li>
 								</ul>
 							</div>
@@ -61,10 +61,11 @@
 							</div>
 						</div>
 						<div class="rd-navbar-aside-right" sec:authorize="isAnonymous()">
-							<a class="button button-sm button-secondary button-nina" th:href="@{/login}">Login</a>
+							<a class="button button-icon button-icon-right button-sm button-default-outline button-nina" th:href="@{/login}">Masuk <span class="fa fa-sign-in"></span></a>
 						</div>
+
 						<div class="rd-navbar-aside-right" sec:authorize="isAuthenticated()">
-							<a class="button button-sm button-secondary button-nina" th:href="@{/logout}">Log out</a>
+							<a class="button button-icon button-icon-right button-sm button-default-outline button-nina" th:href="@{/logout}">Keluar <span class="fa fa-sign-out"></span></a>
 						</div>
 					</div>
 				</nav>
