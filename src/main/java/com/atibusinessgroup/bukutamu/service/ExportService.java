@@ -2,6 +2,8 @@ package com.atibusinessgroup.bukutamu.service;
 
 import com.atibusinessgroup.bukutamu.model.Appointment;
 import com.atibusinessgroup.bukutamu.model.BukuTamu;
+import com.atibusinessgroup.bukutamu.model.dto.AppointmentDTO;
+import com.atibusinessgroup.bukutamu.model.dto.BukuTamuDTO;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -22,7 +24,7 @@ import java.util.Locale;
 @Service
 public class ExportService {
 
-    public Resource exportBukuTamu(List<BukuTamu> bukuTamuList){
+    public Resource exportBukuTamu(List<BukuTamuDTO> bukuTamuList){
         Workbook workbook = new XSSFWorkbook();
 
         // create excel xls sheet
@@ -66,7 +68,7 @@ public class ExportService {
 
         int rowCount = 1;
 
-        for (BukuTamu bukuTamu : bukuTamuList) {
+        for (BukuTamuDTO bukuTamu : bukuTamuList) {
             Row userRow = sheet.createRow(rowCount++);
             userRow.createCell(0).setCellValue(bukuTamu.getJenis());
             userRow.createCell(1).setCellValue(bukuTamu.getNama());
@@ -90,7 +92,7 @@ public class ExportService {
         return new ByteArrayResource(out.toByteArray());
     }
 
-    public Resource exportAppointment(List<Appointment> appointmentList){
+    public Resource exportAppointment(List<AppointmentDTO> appointmentList){
         Workbook workbook = new XSSFWorkbook();
 
         // create excel xls sheet
@@ -136,7 +138,7 @@ public class ExportService {
 
         int rowCount = 1;
 
-        for (Appointment appointment : appointmentList) {
+        for (AppointmentDTO appointment : appointmentList) {
             Row userRow = sheet.createRow(rowCount++);
             userRow.createCell(0).setCellValue(appointment.getJenis());
             userRow.createCell(1).setCellValue(appointment.getNama());

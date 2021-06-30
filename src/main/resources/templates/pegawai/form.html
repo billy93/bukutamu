@@ -1,0 +1,24 @@
+<div xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" th:fragment="form-pegawai">
+    <form class="rd-mailform text-left" data-form-output="form-output-global" data-form-type="contact" th:object="${pegawai}" action="/pegawai/form" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <div class="row row-20">
+            <div class="col-md-12">
+                <label class="form-label-outside">Nama</label>
+                <div class="form-wrap form-wrap-inline">
+                    <input class="form-input" id="nama" type="text" th:field="*{nama}" required/>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label-outside">Jabatan</label>
+                <div class="form-wrap form-wrap-inline">
+                    <input class="form-input" id="jabatan" type="text" th:field="*{jabatan}" required/>
+                </div>
+            </div>
+            <div class="col-lg-12 offset-custom-4">
+                <div class="form-button">
+                    <button class="button button-secondary button-nina" type="submit">Kirim</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

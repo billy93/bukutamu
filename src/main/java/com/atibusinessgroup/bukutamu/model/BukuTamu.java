@@ -1,9 +1,8 @@
 package com.atibusinessgroup.bukutamu.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
 
@@ -143,5 +142,22 @@ public class BukuTamu {
         this.noTelepon = noTelepon;
     }
 
-
+    @Override
+    public String toString() {
+        return "BukuTamu{" +
+                "id='" + id + '\'' +
+                ", jenis='" + jenis + '\'' +
+                ", nama='" + nama + '\'' +
+                ", jenisKelamin='" + jenisKelamin + '\'' +
+                ", tipeIdentitas='" + tipeIdentitas + '\'' +
+                ", nomorIdentitas='" + nomorIdentitas + '\'' +
+                ", alamat='" + alamat + '\'' +
+                ", keperluan='" + keperluan + '\'' +
+                ", pihakYgDitemui='" + pihakYgDitemui + '\'' +
+                ", createdDate=" + createdDate +
+                ", keterangan='" + keterangan + '\'' +
+                ", noHp='" + noHp + '\'' +
+                ", noTelepon='" + noTelepon + '\'' +
+                '}';
+    }
 }

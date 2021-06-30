@@ -8,8 +8,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.atibusinessgroup.bukutamu.model.BukuTamu;
+import com.atibusinessgroup.bukutamu.model.Pegawai;
+import com.atibusinessgroup.bukutamu.model.dto.BukuTamuDTO;
 import com.atibusinessgroup.bukutamu.model.dto.SearchGuestbookListDTO;
 import com.atibusinessgroup.bukutamu.model.dto.SearchGuestbookListNonOptionalDTO;
+import com.atibusinessgroup.bukutamu.repo.PegawaiRepository;
 import com.atibusinessgroup.bukutamu.service.ExportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -32,6 +35,8 @@ public class BukuTamuController {
 
 	@Autowired
 	private BukuTamuRepository bukuTamuRepository;
+	@Autowired
+	private PegawaiRepository pegawaiRepository;
 	@Autowired
 	private ExportService exportService;
 
@@ -142,6 +147,8 @@ public class BukuTamuController {
 
 	@GetMapping("/guestbook")
 	public String index(Model model){
+		List<Pegawai> pegawaiList = pegawaiRepository.findAll();
+		model.addAttribute("pegawaiList", pegawaiList);
 		return "guestbook";
 	}
 
@@ -154,7 +161,7 @@ public class BukuTamuController {
 	public ResponseEntity<Resource> exportPolicyList(SearchGuestbookListDTO searchGuestbookListDTO) throws IOException {
 		Pageable page = PageRequest.of(searchGuestbookListDTO.getPage().get(), searchGuestbookListDTO.getSize().get());
 
-		Page<com.atibusinessgroup.bukutamu.model.BukuTamu> getBukuTamu = bukuTamuRepository.findAll(
+		Page<BukuTamuDTO> getBukuTamu = bukuTamuRepository.findAll(
 				searchGuestbookListDTO.getJenis().get(),
 				searchGuestbookListDTO.getNama().get(),
 				searchGuestbookListDTO.getKeperluan().get(),
@@ -177,7 +184,7 @@ public class BukuTamuController {
 	@GetMapping("/guestbook/list")
 	public String list(SearchGuestbookListDTO searchGuestbookListDTO, Model model, HttpSession httpSession){
 		Pageable page = PageRequest.of(searchGuestbookListDTO.getPage().get(), searchGuestbookListDTO.getSize().get());
-		Page<com.atibusinessgroup.bukutamu.model.BukuTamu> getBukuTamu = bukuTamuRepository.findAll(
+		Page<BukuTamuDTO> getBukuTamu = bukuTamuRepository.findAll(
 				searchGuestbookListDTO.getJenis().get(),
 				searchGuestbookListDTO.getNama().get(),
 				searchGuestbookListDTO.getKeperluan().get(),

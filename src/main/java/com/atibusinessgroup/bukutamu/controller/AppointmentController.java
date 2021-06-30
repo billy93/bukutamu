@@ -2,11 +2,10 @@ package com.atibusinessgroup.bukutamu.controller;
 
 import com.atibusinessgroup.bukutamu.model.Appointment;
 import com.atibusinessgroup.bukutamu.model.BukuTamu;
-import com.atibusinessgroup.bukutamu.model.dto.SearchAppointmentListDTO;
-import com.atibusinessgroup.bukutamu.model.dto.SearchAppointmentListNonOptionalDTO;
-import com.atibusinessgroup.bukutamu.model.dto.SearchGuestbookListDTO;
-import com.atibusinessgroup.bukutamu.model.dto.SearchGuestbookListNonOptionalDTO;
+import com.atibusinessgroup.bukutamu.model.Pegawai;
+import com.atibusinessgroup.bukutamu.model.dto.*;
 import com.atibusinessgroup.bukutamu.repo.AppointmentRepository;
+import com.atibusinessgroup.bukutamu.repo.PegawaiRepository;
 import com.atibusinessgroup.bukutamu.service.ExportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -41,10 +40,14 @@ public class AppointmentController {
     @Autowired
     private AppointmentRepository appointmentRepository;
     @Autowired
+    private PegawaiRepository pegawaiRepository;
+    @Autowired
     private ExportService exportService;
 
     @GetMapping("/appointment")
     public String index(Model model) {
+        List<Pegawai> pegawaiList = pegawaiRepository.findAll();
+        model.addAttribute("pegawaiList", pegawaiList);
         return "appointment";
     }
 
@@ -56,7 +59,7 @@ public class AppointmentController {
     @GetMapping("/appointment/list")
     public String list(SearchAppointmentListDTO searchAppointmentListDTO, Model model, HttpSession httpSession){
         Pageable page = PageRequest.of(searchAppointmentListDTO.getPage().get(), searchAppointmentListDTO.getSize().get());
-        Page<com.atibusinessgroup.bukutamu.model.Appointment> appointment = appointmentRepository.findAll(
+        Page<AppointmentDTO> appointment = appointmentRepository.findAll(
                 searchAppointmentListDTO.getJenis().get(),
                 searchAppointmentListDTO.getNama().get(),
                 searchAppointmentListDTO.getKeperluan().get(),
@@ -112,7 +115,7 @@ public class AppointmentController {
     public ResponseEntity<Resource> exportPolicyList(SearchAppointmentListDTO searchAppointmentListDTO) throws IOException {
         Pageable page = PageRequest.of(searchAppointmentListDTO.getPage().get(), searchAppointmentListDTO.getSize().get());
 
-        Page<com.atibusinessgroup.bukutamu.model.Appointment> getAppointment = appointmentRepository.findAll(
+        Page<AppointmentDTO> getAppointment = appointmentRepository.findAll(
                 searchAppointmentListDTO.getJenis().get(),
                 searchAppointmentListDTO.getNama().get(),
                 searchAppointmentListDTO.getKeperluan().get(),

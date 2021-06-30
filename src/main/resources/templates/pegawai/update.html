@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" class="js"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/layout.html}">
+
+<section class="section" layout:fragment="content">
+    <div class="swiper-form-wrap">
+        <!-- Swiper-->
+        <div class="swiper-container swiper-slider swiper-slider-custom swiper-slider_height-1 swiper-align-left swiper-align-left-custom context-dark bg-index" data-loop="true" data-autoplay="5500" data-simulate-touch="true" data-slide-effect="fade">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" data-slide-bg="images/landing-private-airlines-slider-1.jpg">
+                    <div class="swiper-slide-caption">
+                        <div class="container container-bigger swiper-main-section">
+                            <div class="row justify-content-sm-center justify-content-md-start row-ten">
+                                <div class="col-lg-4 col-xl-3 col-xxl-4 text-center text-lg-left">
+                                    <div class="box-width-3">
+                                        <h1 class="text-sbold">Selamat Datang di Buku Tamu PA Ponorogo</h1><a class="button button-default-outline button-nina button-sm" href="index.html#">learn more</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Swiper controls-->
+            <div class="swiper-pagination-wrap">
+                <div class="container container-bigger">
+                    <div class="row row-ten">
+                        <div class="col-sm-12">
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Swiper Navigation-->
+            <div class="swiper-button-prev mdi mdi-chevron-left"></div>
+            <div class="swiper-button-next mdi mdi-chevron-right"></div>
+        </div>
+        <div class="container container-bigger form-request-wrap form-request-wrap-modern">
+            <div class="row justify-content-sm-center justify-content-lg-end row-ten">
+                <div class="col-lg-6 col-xxl-6">
+                    <div class="form-request form-request-modern bg-gray-lighter">
+                        <h4 class="heading-line text-regular ls-1">Update Pegawai</h4>
+
+                        <div th:replace="pegawai/form :: form-pegawai"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" class="js"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/layout.html}">
+
+<form id="searchForm" th:action="@{/pegawai/list}" th:object="${searchParam}" method="post" layout:fragment="content">
+    <input type="hidden" id="page" th:field="*{page}"/>
+
+    <section class="section section-lg bg-default text-center pb-5">
+        <div class="container-fullwidth-custom">
+            <h4 class="text-primary">Daftar Pegawai</h4>
+            <div class="row justify-content-sm-center">
+                <div class="col-md-2">
+                    <label class="form-label-outside">NAMA</label>
+                    <div class="form-wrap">
+                        <div class="input-group">
+                            <input class="form-input" type="text" th:field="*{nama}" data-constraints="@Required">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label-outside">JABATAN</label>
+                    <div class="form-wrap">
+                        <div class="input-group">
+                            <input class="form-input" type="text" th:field="*{jabatan}" data-constraints="@Required">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="button button-icon button-icon-left button-secondary button-nina button-filter"><span class="icon fa fa-search"></span></button>
+                </div>
+                <div class="col-md-1">
+                    <div class="button button-icon button-icon-left button-default-outline button-nina button-filter" onclick="exportFile()"><span class="icon fa fa-download"></span></div>
+                </div>
+                <div class="col-md-1">
+                    <a href="/pegawai/create">
+                        <button type="button" class="button button-icon button-icon-left button-secondary button-nina button-filter"><span class="icon fa fa-plus"></span></button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-lg bg-default text-center">
+        <div class="container-fullwidth-custom">
+            <div class="row justify-content-sm-center">
+                <div class="col-md-12">
+                    <div class="table-novi table-custom-responsive">
+                        <table class="table-custom table-color-header">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nama</th>
+                                <th>Jabatan/Bagian</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="bt, idx : ${pegawai}">
+                                <td>[[${idx.index+1}]]</td>
+                                <td>[[${bt.nama}]]</td>
+                                <td>[[${bt.jabatan}]]</td>
+                                <td>
+                                    <a th:href="@{'/pegawai/update/'+${bt.id}}">
+                                        <button type="button" class="button button-secondary button-nina button-action bg-success"><span class="icon fa fa-pencil"></span></button>
+                                    </a>
+                                    <a th:href="@{'/pegawai/delete/'+${bt.id}}">
+                                        <button type="button" class="button button-secondary button-nina button-action bg-danger"><span class="icon fa fa-trash"></span></button>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        <div></div>
+                        <ul class="pagination-custom">
+                            <li>
+                                <a href="#" th:onclick="'paginationLink(\'' + @{${currentPage}-1} + '\')'">
+                                    <
+                                </a>
+                            </li>
+                            <li th:classappend="${page == currentPage+1 ? 'active':''}">
+                                <a th:each="page : ${pageNumbers}" th:onclick="'paginationLink(\'' + @{${page}-1} + '\')'">
+                                    [[${page}]]
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" th:onclick="'paginationLink(\'' + @{${currentPage}+1} + '\')'">
+                                    >
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <script th:inline="javascript">
+            var totalPages = /*[[${totalPages}]]*/ 0;
+            function paginationLink(page){
+                if(page < 0){
+                    page = 0;
+                }
+                else if(page > totalPages-1){
+                    page = totalPages-1;
+                }
+                $('#page').val(page);
+                $('#searchForm').submit();
+            }
+
+            function exportFile(){
+                $("#searchForm").attr("action", "/pegawai/list/export");
+                $("#searchForm").submit();
+                $("#searchForm").attr("action", "/pegawai/list");
+            }
+        </script>
+    </section>
+</form>
+
+</html>

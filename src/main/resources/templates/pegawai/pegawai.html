@@ -125,10 +125,7 @@
 									</div>
 									<div class="col-md-6">
 										<label class="form-label-outside">Pihak yang ditemui</label>
-										<select class="form-input select-filter" data-placeholder="All" data-minimum-results-for-search="Infinity" data-constraints="@Required" name="pihakYgDitemui" required>
-											<option value="">Pilih salah satu</option>
-											<option th:each="p : ${pegawaiList}" th:value="${p.id}" th:text="${p.nama+' - '+p.jabatan}"></option>
-										</select>
+										<input class="form-input" id="pihakYgDitemui" type="text" name="pihakYgDitemui" data-constraints="@Required">
 									</div>
 									<div class="col-md-6">
 										<div class="form-wrap">
