@@ -24,8 +24,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.atibusinessgroup.bukutamu.filter.SimpleAuthenticationFilter;
 import com.atibusinessgroup.bukutamu.filter.UserTravellerAuthenticationFilter;
-import com.atibusinessgroup.bukutamu.service.CustomAuthenticationProvider;
-import com.atibusinessgroup.bukutamu.service.CustomUserTravellerAuthenticationProvider;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
