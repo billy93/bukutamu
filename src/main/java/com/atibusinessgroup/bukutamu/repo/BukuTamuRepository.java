@@ -21,7 +21,7 @@ public interface BukuTamuRepository extends JpaRepository<BukuTamu, String>, Pag
             "b.tipe_identitas as tipeIdentitas, b.nomor_identitas as nomorIdentitas, " +
             "b.alamat, b.keperluan, b.pihak_yg_ditemui as pihakYgDitemui, p.nama as pihakYgDitemuiNama, b.created_date as createdDate, " +
             "b.keterangan, b.no_hp as noHp, b.no_telepon as noTelepon from buku_tamu as b " +
-            "left join pegawai p on p.id = b.pihak_yg_ditemui "+
+            "left join pegawai p on p.id = cast(b.pihak_yg_ditemui as int) "+
             "where (?1 IS NULL OR ?1='' OR b.jenis  = ?1) AND " +
             "(?2 IS NULL OR ?2='' OR b.nama LIKE CONCAT('%', ?2, '%')) AND "+
             "(?3 IS NULL OR ?3='' OR b.keperluan LIKE CONCAT('%', ?3, '%')) AND "+
