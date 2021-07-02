@@ -6,25 +6,36 @@
 
 	<div layout:fragment="content">
 		<!-- Standard Pricing-->
-		<section class="section section-lg bg-default text-center">
+		<section class="section section-lg bg-default text-center pb-5">
 			<form method="post" action="/report" th:object="${searchForm}">
 				<div class="container">
-					<h3 class="text-primary">Laporan Bulanan</h3>
+					<h4 class="text-primary">Laporan Bulanan</h4>
 					<div class="row justify-content-sm-center row-xl row-30">
 						<div class="col-md-4">
-							<label class="form-label-outside">Tanggal Mulai</label>
-							<div class="form-wrap form-wrap-validation">
-								<input class="form-input" data-time-picker="date" th:field="*{startDate}">
+							<label class="form-label-outside" for="forms-3-name">TANGGAL MULAI</label>
+							<div class="form-wrap">
+								 <div class="input-group">
+									<input class="form-input" data-time-picker="date" th:field="*{startDate}">
+	                                <span class="input-group-text input-bg-filter" id="basic-addon1">
+	                                <div class="fa fa-calendar"></div>
+	                              </span>
+	                          	 </div>
 							</div>
 						</div>
 						<div class="col-md-4">
-							<label class="form-label-outside">Tanggal Selesai</label>
-							<div class="form-wrap form-wrap-validation">
-								<input class="form-input" data-time-picker="date" th:field="*{endDate}">
+							<label class="form-label-outside" for="forms-3-name">TANGGAL SELESAI</label>
+							<div class="form-wrap">
+								<div class="input-group">
+									<input class="form-input" data-time-picker="date" th:field="*{endDate}">
+	                                <span class="input-group-text input-bg-filter" id="basic-addon1">
+	                                <div class="fa fa-calendar"></div>
+								</div>
 							</div>
 						</div>
-						<div class="col-md-4">
-							<button type="submit" class="button button-icon button-icon-left button-secondary button-nina"><span class="icon mdi mdi-magnify"></span>Search</button>
+			           <div class="col-md-2">
+			           </div>
+						<div class="col-md-2">
+							<button type="submit" class="button button-icon button-icon-left button-secondary button-nina button-filter"><span class="icon fa fa-search"></span>CARI</button>
 						</div>
 					</div>
 				</div>
@@ -34,7 +45,7 @@
 		<!-- Standard Pricing-->
 		<section class="section section-lg bg-default text-center">
 			<div class="container">
-				<h3 class="text-primary">STATISTIK JUMLAH TAMU</h3>
+				<h4 class="text-primary">STATISTIK JUMLAH TAMU</h4>
 				<div class="row justify-content-sm-center row-xl row-30">
 					<!-- Pricing Box-->
 					<div class="col-md-6 col-xl-3">
@@ -98,6 +109,7 @@
 
 		<section class="section section-lg bg-default text-center">
 			<div class="container">
+          		<h4 class="text-primary">STATISTIK KEPERLUAN TAMU</h4>
 				<div id="chart3" style="height: 280px;"></div>
 			</div>
 		</section>

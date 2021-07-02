@@ -21,7 +21,7 @@
                                 <option value="Khusus">Tamu Khusus</option>
                                 <option value="Umum">Tamu Umum</option>
                             </select>
-                            <span class="input-group-text" id="basic-addon1">
+                            <span class="input-group-text input-bg-filter" id="basic-addon1">
                             <div class="fa fa-chevron-down"></div>
                           </span>
                         </div>
@@ -55,7 +55,7 @@
                                 <option value="Surat Menyurat">Surat Menyurat</option>
                                 <option value="Lainnya">Lainnya</option>
                             </select>
-                            <span class="input-group-text" id="basic-addon1">
+                            <span class="input-group-text input-bg-filter" id="basic-addon1">
                             <div class="fa fa-chevron-down"></div>
                           </span>
                         </div>
@@ -86,23 +86,23 @@
                     <div class="table-novi table-custom-responsive">
                         <table class="table-custom table-color-header">
                             <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Jenis Tamu</th>
-                                <th>Nama</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Alamat</th>
-                                <th>Tanda Pengenal</th>
-                                <th>No Tanda Pengenal</th>
-                                <th>Pihak yang ditemui</th>
-                                <th>Keperluan</th>
-                                <th>Keterangan</th>
-                                <th>No HP</th>
-                                <th>No Telepon</th>
-                                <th>Tanggal & Jam Janji</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Nama</th>
+                                  <th>L/P</th>
+                                  <th>Alamat</th>
+                                  <th>ID</th>
+                                  <th>No ID</th>
+                                  <th>Pihak</th>
+                                  <th>Keperluan</th>
+                                  <th>Keterangan</th>
+                                  <th>No HP</th>
+                                  <th>No Telepon</th>
+                                  <th>Tanggal</th>
+                                  <th>Jam</th>
+                                  <th>Status</th>
+                                  <th width="150"></th>
+                                </tr>
                             </thead>
                             <tbody>
                             <tr th:each="bt, idx : ${appointment}">
@@ -121,16 +121,16 @@
                                 <td>[[${#dates.format(bt.janjiTemuDate, 'dd-MMM-yyyy HH:mm')}]]</td>
                                 <td>
                                     <span th:if="${bt.approved}">Diterima</span>
-                                    <span th:if="${!bt.approved}">Ditolak / Belum diproses</span>
+                                    <span th:if="${!bt.approved}">Ditolak</span>
                                 </td>
-                                <td>
+                                <td align="center">
                                     <form action="/appointment/approve" method="post">
                                         <input type="hidden" name="id" th:value="${bt.id}"/>
-                                        <button type="submit" class="button button-secondary button-nina button-action bg-success"><span class="icon fa fa-check"></span></button>
+                                        <button type="submit" class="button button-secondary button-nina button-action bg-success" data-toggle="tooltip" data-placement="right" title="Terima"><span class="icon fa fa-check"></span></button>
                                     </form>
                                     <form action="/appointment/reject" method="post">
                                         <input type="hidden" name="id" th:value="${bt.id}"/>
-                                        <button type="submit" class="button button-secondary button-nina button-action bg-danger"><span class="icon fa fa-times"></span></button>
+                                        <button type="submit" class="button button-secondary button-nina button-action bg-danger" data-toggle="tooltip" data-placement="right" title="Tolak"><span class="icon fa fa-times"></span></button>
                                     </form>
                                 </td>
                             </tr>
