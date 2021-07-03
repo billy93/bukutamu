@@ -8,7 +8,7 @@ import java.util.Date;
 
 public interface AppointmentDTO {
 
-    public String getId();
+    public Long getId();
 
     public String getJenis();
 
@@ -38,5 +38,5 @@ public interface AppointmentDTO {
 
     public Instant getCreatedDate();
 
-    public boolean isApproved();
+    public int getApproved();
 }

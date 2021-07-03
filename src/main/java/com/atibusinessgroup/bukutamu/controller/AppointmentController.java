@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -48,6 +49,16 @@ public class AppointmentController {
     public String index(Model model) {
         List<Pegawai> pegawaiList = pegawaiRepository.findAll();
         model.addAttribute("pegawaiList", pegawaiList);
+        model.addAttribute("appointment", new Appointment());
+        return "appointment";
+    }
+
+    @GetMapping("/appointment/update/{id}")
+    public String update(Model model, @PathVariable String id) {
+        List<Pegawai> pegawaiList = pegawaiRepository.findAll();
+        model.addAttribute("pegawaiList", pegawaiList);
+
+        model.addAttribute("appointment", appointmentRepository.findById(id).get());
         return "appointment";
     }
 
@@ -137,55 +148,75 @@ public class AppointmentController {
 
     @PostMapping("/appointment")
     public String createAppointment(@ModelAttribute Appointment appointment, RedirectAttributes redirectAttributes) {
-        com.atibusinessgroup.bukutamu.model.Appointment bt = new com.atibusinessgroup.bukutamu.model.Appointment();
         if (appointment.getId() != null) {
-            bt = appointmentRepository.getOne(appointment.getId());
-        }
-        bt.setId(UUID.randomUUID().toString());
-        bt.setNama(appointment.getNama());
-        bt.setAlamat(appointment.getAlamat());
-        bt.setJenis(appointment.getJenis());
-        bt.setJenisKelamin(appointment.getJenisKelamin());
-        bt.setKeperluan(appointment.getKeperluan());
-        bt.setNomorIdentitas(appointment.getNomorIdentitas());
-        bt.setTipeIdentitas(appointment.getTipeIdentitas());
-        bt.setPihakYgDitemui(appointment.getPihakYgDitemui());
-        bt.setJanjiTemuDate(appointment.getJanjiTemuDate());
-        bt.setKeterangan(appointment.getKeterangan());
-        bt.setNoHp(appointment.getNoHp());
-        bt.setNoTelepon(appointment.getNoTelepon());
-        bt.setCreatedDate(Instant.now());
 
+        }else {
+            appointment.setApproved(-1);
+            appointment.setCreatedDate(Instant.now());
+        }
+//        com.atibusinessgroup.bukutamu.model.Appointment bt = new com.atibusinessgroup.bukutamu.model.Appointment();
+//        if (appointment.getId() != null) {
+//            bt = appointmentRepository.getOne(appointment.getId());
+//        }
+//        else {
+//            bt.setId(UUID.randomUUID().toString());
+//            bt.setApproved(-1);
+//            bt.setCreatedDate(Instant.now());
+//        }
+//        bt.setNama(appointment.getNama());
+//        bt.setAlamat(appointment.getAlamat());
+//        bt.setJenis(appointment.getJenis());
+//        bt.setJenisKelamin(appointment.getJenisKelamin());
+//        bt.setKeperluan(appointment.getKeperluan());
+//        bt.setNomorIdentitas(appointment.getNomorIdentitas());
+//        bt.setTipeIdentitas(appointment.getTipeIdentitas());
+//        bt.setPihakYgDitemui(appointment.getPihakYgDitemui());
+//        bt.setJanjiTemuDate(appointment.getJanjiTemuDate());
+//        bt.setKeterangan(appointment.getKeterangan());
+//        bt.setNoHp(appointment.getNoHp());
+//        bt.setNoTelepon(appointment.getNoTelepon());
+//
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-
-        try {
-            Date janjiTemuDate = simpleDateFormat.parse(appointment.getTanggal()+" "+appointment.getJam());
-            bt.setJanjiTemuDate(janjiTemuDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if(appointment.getTanggal() != null && appointment.getJam() != null) {
+            try {
+                Date janjiTemuDate = simpleDateFormat.parse(appointment.getTanggal() + " " + appointment.getJam());
+                appointment.setJanjiTemuDate(janjiTemuDate);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
-        appointmentRepository.save(bt);
+        appointmentRepository.save(appointment);
 
         redirectAttributes.addFlashAttribute("success", true);
         return "redirect:/appointment";
     }
 
-    @PostMapping("/appointment/approve")
-    public String approveAppointment(@ModelAttribute Appointment appointment) {
-        Appointment appointment1 = appointmentRepository.getOne(appointment.getId());
-        appointment1.setApproved(true);
+    @GetMapping("/appointment/approve/{id}")
+    public String approveAppointment(@PathVariable String id, RedirectAttributes redirectAttributes) {
+        Appointment appointment1 = appointmentRepository.getOne(id);
+        appointment1.setApproved(1);
         appointmentRepository.save(appointment1);
         System.out.println("Approve appointment");
+
+        redirectAttributes.addFlashAttribute("approved", true);
         return "redirect:/appointment/list";
     }
 
-    @PostMapping("/appointment/reject")
-    public String rejectAppointment(@ModelAttribute Appointment appointment) {
-        Appointment appointment1 = appointmentRepository.getOne(appointment.getId());
-        appointment1.setApproved(false);
+    @GetMapping("/appointment/reject/{id}")
+    public String rejectAppointment(@PathVariable String id, RedirectAttributes redirectAttributes) {
+        Appointment appointment1 = appointmentRepository.getOne(id);
+        appointment1.setApproved(0);
         appointmentRepository.save(appointment1);
         System.out.println("Reject appointment");
+        redirectAttributes.addFlashAttribute("rejected", true);
+        return "redirect:/appointment/list";
+    }
+
+    @GetMapping("/appointment/delete/{id}")
+    public String delete(@PathVariable String id,  RedirectAttributes redirectAttributes){
+        appointmentRepository.deleteById(id);
+        redirectAttributes.addFlashAttribute("deleted", true);
+
         return "redirect:/appointment/list";
     }
 }

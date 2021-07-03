@@ -10,6 +10,15 @@
     <section class="section section-lg bg-default text-center pb-5">
         <div class="container-fullwidth-custom">
             <h4 class="text-primary">Daftar Janji</h4>
+            <div class="alert alert-success" role="alert" th:if="${approved}">
+                Janji terkait sudah diterima. Status akan berubah menjadi Terima
+            </div>
+            <div class="alert alert-success" role="alert" th:if="${rejected}">
+                Janji terkait sudah ditolak. Status akan berubah menjadi Tolak
+            </div>
+            <div class="alert alert-success" role="alert" th:if="${deleted}">
+                Data janji berhasil dihapus
+            </div>
             <div class="row justify-content-sm-center">
                 <div class="col-md-2">
                     <label class="form-label-outside">JENIS TAMU</label>
@@ -88,6 +97,7 @@
                             <thead>
                                 <tr>
                                   <th>#</th>
+                                  <th>Jenis Tamu</th>
                                   <th>Nama</th>
                                   <th>L/P</th>
                                   <th>Alamat</th>
@@ -98,8 +108,7 @@
                                   <th>Keterangan</th>
                                   <th>No HP</th>
                                   <th>No Telepon</th>
-                                  <th>Tanggal</th>
-                                  <th>Jam</th>
+                                  <th>Tanggal & Jam</th>
                                   <th>Status</th>
                                   <th width="150"></th>
                                 </tr>
@@ -118,20 +127,21 @@
                                 <td>[[${bt.keterangan}]]</td>
                                 <td>[[${bt.noHp}]]</td>
                                 <td>[[${bt.noTelepon}]]</td>
-                                <td>[[${#dates.format(bt.janjiTemuDate, 'dd-MMM-yyyy HH:mm')}]]</td>
+                                <td>[[${bt.janjiTemuDate != null ? #dates.format(bt.janjiTemuDate, 'dd-MMM-yyyy HH:mm') : ''}]]</td>
                                 <td>
-                                    <span th:if="${bt.approved}">Diterima</span>
-                                    <span th:if="${!bt.approved}">Ditolak</span>
+                                    <span th:if="${bt.approved == 1}">Diterima</span>
+                                    <span th:if="${bt.approved == 0}">Ditolak</span>
+                                    <span th:if="${bt.approved == -1}">Pending</span>
                                 </td>
                                 <td align="center">
-                                    <form action="/appointment/approve" method="post">
-                                        <input type="hidden" name="id" th:value="${bt.id}"/>
-                                        <button type="submit" class="button button-secondary button-nina button-action bg-success" data-toggle="tooltip" data-placement="right" title="Terima"><span class="icon fa fa-check"></span></button>
-                                    </form>
-                                    <form action="/appointment/reject" method="post">
-                                        <input type="hidden" name="id" th:value="${bt.id}"/>
-                                        <button type="submit" class="button button-secondary button-nina button-action bg-danger" data-toggle="tooltip" data-placement="right" title="Tolak"><span class="icon fa fa-times"></span></button>
-                                    </form>
+                                    <a th:href="@{'/appointment/update/'+${bt.id}}">
+                                        <button type="button" class="button button-secondary button-nina button-action bg-success" data-toggle="tooltip" data-placement="right" title="Update"><span class="icon fa fa-pencil"></span></button>
+                                    </a>
+                                    <a th:href="@{'/appointment/delete/'+${bt.id}}">
+                                        <button type="button" class="button button-secondary button-nina button-action bg-danger" data-toggle="tooltip" data-placement="right" title="Delete"><span class="icon fa fa-trash"></span></button>
+                                    </a>
+                                    <a th:href="@{'/appointment/approve/'+${bt.id}}" class="button button-secondary button-nina button-action bg-success" data-toggle="tooltip" data-placement="right" title="Terima"><span class="icon fa fa-check"></span></a>
+                                    <a th:href="@{'/appointment/reject/'+${bt.id}}" class="button button-secondary button-nina button-action bg-danger" data-toggle="tooltip" data-placement="right" title="Tolak"><span class="icon fa fa-times"></span></a>
                                 </td>
                             </tr>
                             </tbody>

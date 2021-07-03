@@ -107,7 +107,7 @@ public class LoginController {
         chart1.setAnimationEnabled(true);
 
         Chart.Title title = new Chart.Title();
-        title.setText("Statistik Keperluan Tamu");
+//        title.setText("Statistik Keperluan Tamu");
         chart1.setTitle(title);
 
         List<Chart.Data> chartData = new ArrayList<Chart.Data>();
@@ -141,7 +141,7 @@ public class LoginController {
         chart1.setAnimationEnabled(true);
 
         Chart.Title title = new Chart.Title();
-        title.setText("Grafik Tamu");
+//        title.setText("Grafik Tamu");
         chart1.setTitle(title);
 
         Chart.AxisY axisY = new Chart.AxisY();
@@ -247,7 +247,7 @@ public class LoginController {
         chart1.setAnimationEnabled(true);
 
         Chart.Title title = new Chart.Title();
-        title.setText("Grafik Tamu Total");
+//        title.setText("Grafik Tamu Total");
         chart1.setTitle(title);
 
         Chart.AxisY axisY = new Chart.AxisY();

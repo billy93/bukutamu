@@ -11,7 +11,8 @@ import java.util.Date;
 public class Appointment {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "jenis")
     private String jenis;
@@ -41,17 +42,17 @@ public class Appointment {
     @Column(name = "created_date")
     private Instant createdDate;
     @Column(name = "approved")
-    private boolean approved;
+    private int approved;
     @Transient
     private String tanggal;
     @Transient
     private String jam;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -135,11 +136,11 @@ public class Appointment {
         this.janjiTemuDate = janjiTemuDate;
     }
 
-    public boolean isApproved() {
+    public int getApproved() {
         return approved;
     }
 
-    public void setApproved(boolean approved) {
+    public void setApproved(int approved) {
         this.approved = approved;
     }
 

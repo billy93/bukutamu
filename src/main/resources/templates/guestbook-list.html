@@ -12,6 +12,9 @@
         <section class="section section-lg bg-default text-center pb-5">
             <div class="container-fullwidth-custom">
                 <h4 class="text-primary">Daftar Tamu</h4>
+                <div class="alert alert-success" role="alert" th:if="${deleted}">
+                    Data tamu berhasil dihapus
+                </div>
                 <div class="row justify-content-sm-center">
                     <div class="col-md-2">
                         <label class="form-label-outside">JENIS TAMU</label>
@@ -101,6 +104,7 @@
                             <th>Keterangan</th>
                             <th>No HP</th>
                             <th>No Telepon</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -117,6 +121,14 @@
                             <td>[[${bt.keterangan}]]</td>
                             <td>[[${bt.noHp}]]</td>
                             <td>[[${bt.noTelepon}]]</td>
+                            <td>
+                                <a th:href="@{'/guestbook/update/'+${bt.id}}">
+                                    <button type="button" class="button button-secondary button-nina button-action bg-success"><span class="icon fa fa-pencil"></span></button>
+                                </a>
+                                <a th:href="@{'/guestbook/delete/'+${bt.id}}">
+                                    <button type="button" class="button button-secondary button-nina button-action bg-danger"><span class="icon fa fa-trash"></span></button>
+                                </a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

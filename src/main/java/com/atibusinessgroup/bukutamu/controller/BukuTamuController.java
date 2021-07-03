@@ -149,6 +149,18 @@ public class BukuTamuController {
 	public String index(Model model){
 		List<Pegawai> pegawaiList = pegawaiRepository.findAll();
 		model.addAttribute("pegawaiList", pegawaiList);
+
+		model.addAttribute("bukuTamu", new com.atibusinessgroup.bukutamu.model.BukuTamu());
+		return "guestbook";
+	}
+
+	@GetMapping("/guestbook/update/{id}")
+	public String index(Model model, @PathVariable String id){
+		Optional<com.atibusinessgroup.bukutamu.model.BukuTamu> bukuTamu = bukuTamuRepository.findById(id);
+		model.addAttribute("bukuTamu", bukuTamu.get());
+
+		List<Pegawai> pegawaiList = pegawaiRepository.findAll();
+		model.addAttribute("pegawaiList", pegawaiList);
 		return "guestbook";
 	}
 
@@ -242,7 +254,9 @@ public class BukuTamuController {
 		if(bukuTamu.getId() != null){
 			bt = bukuTamuRepository.getOne(bukuTamu.getId());
 		}
-		bt.setId(UUID.randomUUID().toString());
+		else {
+			bt.setId(UUID.randomUUID().toString());
+		}
 		bt.setNama(bukuTamu.getNama());
 		bt.setAlamat(bukuTamu.getAlamat());
 		bt.setJenis(bukuTamu.getJenis());
@@ -260,4 +274,12 @@ public class BukuTamuController {
 		redirectAttributes.addFlashAttribute("success", true);
         return "redirect:/guestbook";
     }
+
+	@GetMapping("/guestbook/delete/{id}")
+	public String delete(@PathVariable String id,  RedirectAttributes redirectAttributes){
+		bukuTamuRepository.deleteById(id);
+		redirectAttributes.addFlashAttribute("deleted", true);
+
+		return "redirect:/guestbook/list";
+	}
 }
