@@ -11,7 +11,8 @@ import java.util.Date;
 public class BukuTamu {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "jenis")
     private String jenis;
@@ -38,11 +39,11 @@ public class BukuTamu {
     @Column(name = "no_telepon")
     private String noTelepon;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

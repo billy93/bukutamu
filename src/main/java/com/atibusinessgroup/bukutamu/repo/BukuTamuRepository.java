@@ -15,7 +15,7 @@ import javax.persistence.Id;
 import java.time.Instant;
 
 @Repository
-public interface BukuTamuRepository extends JpaRepository<BukuTamu, String>, PagingAndSortingRepository<BukuTamu, String> {
+public interface BukuTamuRepository extends JpaRepository<BukuTamu, Long>, PagingAndSortingRepository<BukuTamu, Long> {
 
     @Query(value = "SELECT b.id, b.jenis, b.nama, b.jenis_kelamin as jenisKelamin, " +
             "b.tipe_identitas as tipeIdentitas, b.nomor_identitas as nomorIdentitas, " +

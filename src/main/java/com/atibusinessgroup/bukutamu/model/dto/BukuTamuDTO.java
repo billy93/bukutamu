@@ -5,7 +5,7 @@ import java.time.Instant;
 
 public interface BukuTamuDTO {
 
-    public String getId();
+    public Long getId();
 
     public String getJenis();
 
