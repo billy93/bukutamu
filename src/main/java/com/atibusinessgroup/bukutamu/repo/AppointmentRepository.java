@@ -11,7 +11,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AppointmentRepository extends JpaRepository<Appointment, String>, PagingAndSortingRepository<Appointment, String> {
+public interface AppointmentRepository extends JpaRepository<Appointment, Long>, PagingAndSortingRepository<Appointment, Long> {
 
     @Query(value = "SELECT b.id, b.jenis, b.nama, b.jenis_kelamin as jenisKelamin, " +
             "b.tipe_identitas as tipeIdentitas, b.nomor_identitas as nomorIdentitas, " +

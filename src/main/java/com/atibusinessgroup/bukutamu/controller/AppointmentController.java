@@ -54,7 +54,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/appointment/update/{id}")
-    public String update(Model model, @PathVariable String id) {
+    public String update(Model model, @PathVariable Long id) {
         List<Pegawai> pegawaiList = pegawaiRepository.findAll();
         model.addAttribute("pegawaiList", pegawaiList);
 
@@ -149,7 +149,8 @@ public class AppointmentController {
     @PostMapping("/appointment")
     public String createAppointment(@ModelAttribute Appointment appointment, RedirectAttributes redirectAttributes) {
         if (appointment.getId() != null) {
-
+            Appointment curr = appointmentRepository.getOne(appointment.getId());
+            appointment.setCreatedDate(curr.getCreatedDate());
         }else {
             appointment.setApproved(-1);
             appointment.setCreatedDate(Instant.now());
@@ -192,7 +193,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/appointment/approve/{id}")
-    public String approveAppointment(@PathVariable String id, RedirectAttributes redirectAttributes) {
+    public String approveAppointment(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         Appointment appointment1 = appointmentRepository.getOne(id);
         appointment1.setApproved(1);
         appointmentRepository.save(appointment1);
@@ -203,7 +204,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/appointment/reject/{id}")
-    public String rejectAppointment(@PathVariable String id, RedirectAttributes redirectAttributes) {
+    public String rejectAppointment(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         Appointment appointment1 = appointmentRepository.getOne(id);
         appointment1.setApproved(0);
         appointmentRepository.save(appointment1);
@@ -213,7 +214,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/appointment/delete/{id}")
-    public String delete(@PathVariable String id,  RedirectAttributes redirectAttributes){
+    public String delete(@PathVariable Long id,  RedirectAttributes redirectAttributes){
         appointmentRepository.deleteById(id);
         redirectAttributes.addFlashAttribute("deleted", true);
 
