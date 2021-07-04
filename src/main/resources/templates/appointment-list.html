@@ -17,25 +17,9 @@
                 Janji terkait sudah ditolak. Status akan berubah menjadi Tolak
             </div>
             <div class="alert alert-success" role="alert" th:if="${deleted}">
-                Data janji berhasil dihapus
+                Data terkait berhasil dihapus
             </div>
             <div class="row justify-content-sm-center">
-                <div class="col-md-2">
-                    <label class="form-label-outside">JENIS TAMU</label>
-                    <div class="form-wrap">
-                        <!-- Select 2-->
-                        <div class="input-group">
-                            <select type="text" class="form-input" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" data-constraints="@Required" th:field="*{jenis}">
-                                <option value="">Pilih salah satu</option>
-                                <option value="Khusus">Tamu Khusus</option>
-                                <option value="Umum">Tamu Umum</option>
-                            </select>
-                            <span class="input-group-text input-bg-filter" id="basic-addon1">
-                            <div class="fa fa-chevron-down"></div>
-                          </span>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-2">
                     <label class="form-label-outside" for="forms-3-name">NAMA</label>
                     <div class="form-wrap">
@@ -45,10 +29,25 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <label class="form-label-outside" for="forms-3-name">NO TANDA PENGENAL</label>
+                    <label class="form-label-outside" for="forms-3-name">NO HANDPHONE</label>
                     <div class="form-wrap">
                         <div class="input-group">
-                            <input class="form-input" id="forms-3-name" type="text" th:field="*{nomorIdentitas}" data-constraints="@Required">
+                            <input class="form-input" id="forms-3-name" type="text" th:field="*{noHp}" data-constraints="@Required">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label-outside">JENIS TAMU</label>
+                    <div class="form-wrap">
+                        <div class="input-group">
+                            <select type="text" class="form-input" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" data-constraints="@Required" th:field="*{jenis}">
+                                <option value="">Pilih salah satu</option>
+                                <option value="Khusus">Tamu Khusus</option>
+                                <option value="Umum">Tamu Umum</option>
+                            </select>
+                            <span class="input-group-text input-bg-filter" id="basic-addon1">
+                            <div class="fa fa-chevron-down"></div>
+                          </span>
                         </div>
                     </div>
                 </div>
@@ -71,18 +70,33 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <label class="form-label-outside" for="forms-3-name">NO HANDPHONE</label>
+                    <label class="form-label-outside" for="forms-3-name">TANGGAL MULAI</label>
                     <div class="form-wrap">
-                        <div class="input-group">
-                            <input class="form-input" id="forms-3-name" type="text" th:field="*{noHp}" data-constraints="@Required">
+                         <div class="input-group">
+                                <input class="form-input" data-time-picker="date" th:field="*{startDate}">
+                                <span class="input-group-text input-bg-filter" id="basic-addon1">
+                                    <div class="fa fa-calendar"></div>
+                                </span>
+                         </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label-outside" for="forms-3-name">TANGGAL SELESAI</label>
+                        <div class="form-wrap">
+                            <div class="input-group">
+                                <input class="form-input" data-time-picker="date" th:field="*{endDate}">
+                                <span class="input-group-text input-bg-filter" id="basic-addon1">
+                                    <div class="fa fa-calendar"></div>
+                                </span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-1">
-                    <button type="submit" class="button button-icon button-icon-left button-secondary button-nina button-filter"><span class="icon fa fa-search"></span></button>
-                </div>
+                <div class="col-md-10"></div>
                 <div class="col-md-1">
                     <div class="button button-icon button-icon-left button-default-outline button-nina button-filter" onclick="exportFile()"><span class="icon fa fa-download"></span></div>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="button button-icon button-icon-left button-secondary button-nina button-filter"><span class="icon fa fa-search"></span></button>
                 </div>
             </div>
         </div>
@@ -103,14 +117,15 @@
                                   <th>Alamat</th>
                                   <th>ID</th>
                                   <th>No ID</th>
+                                  <th>No HP</th>
+                                  <th>No Telepon</th>
                                   <th>Pihak</th>
                                   <th>Keperluan</th>
                                   <th>Keterangan</th>
-                                  <th>No HP</th>
-                                  <th>No Telepon</th>
                                   <th>Tanggal & Jam</th>
                                   <th>Status</th>
-                                  <th width="150"></th>
+                                  <th width="150">Terima/Tolak</th>
+                                  <th width="150">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -122,11 +137,11 @@
                                 <td>[[${bt.alamat}]]</td>
                                 <td>[[${bt.tipeIdentitas}]]</td>
                                 <td>[[${bt.nomorIdentitas}]]</td>
+                                <td>[[${bt.noHp}]]</td>
+                                <td>[[${bt.noTelepon}]]</td>
                                 <td>[[${bt.pihakYgDitemuiNama}]]</td>
                                 <td>[[${bt.keperluan}]]</td>
                                 <td>[[${bt.keterangan}]]</td>
-                                <td>[[${bt.noHp}]]</td>
-                                <td>[[${bt.noTelepon}]]</td>
                                 <td>[[${bt.janjiTemuDate != null ? #dates.format(bt.janjiTemuDate, 'dd-MMM-yyyy HH:mm') : ''}]]</td>
                                 <td>
                                     <span th:if="${bt.approved == 1}">Diterima</span>
@@ -134,14 +149,16 @@
                                     <span th:if="${bt.approved == -1}">Pending</span>
                                 </td>
                                 <td align="center">
-                                    <a th:href="@{'/appointment/update/'+${bt.id}}">
-                                        <button type="button" class="button button-secondary button-nina button-action bg-success" data-toggle="tooltip" data-placement="right" title="Update"><span class="icon fa fa-pencil"></span></button>
-                                    </a>
-                                    <a th:href="@{'/appointment/delete/'+${bt.id}}">
-                                        <button type="button" class="button button-secondary button-nina button-action bg-danger" data-toggle="tooltip" data-placement="right" title="Delete"><span class="icon fa fa-trash"></span></button>
-                                    </a>
                                     <a th:href="@{'/appointment/approve/'+${bt.id}}" class="button button-secondary button-nina button-action bg-success" data-toggle="tooltip" data-placement="right" title="Terima"><span class="icon fa fa-check"></span></a>
                                     <a th:href="@{'/appointment/reject/'+${bt.id}}" class="button button-secondary button-nina button-action bg-danger" data-toggle="tooltip" data-placement="right" title="Tolak"><span class="icon fa fa-times"></span></a>
+                                </td>
+                                <td align="center">
+                                    <a th:href="@{'/appointment/update/'+${bt.id}}">
+                                        <button type="button" class="button button-secondary button-nina button-action bg-edit" data-toggle="tooltip" data-placement="right" title="Edit"><span class="icon fa fa-pencil" style="color:mediumaquamarine;"></span></button>
+                                    </a>
+                                    <a th:href="@{'/appointment/delete/'+${bt.id}}">
+                                    <button type="button" class="button button-secondary button-nina button-action bg-delete" data-toggle="tooltip" data-placement="right" title="Hapus"><span class="icon fa fa-trash" style="color:tomato;"></span></button>
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>

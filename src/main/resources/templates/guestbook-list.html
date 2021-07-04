@@ -17,6 +17,22 @@
                 </div>
                 <div class="row justify-content-sm-center">
                     <div class="col-md-2">
+                        <label class="form-label-outside" for="forms-3-name">NAMA</label>
+                        <div class="form-wrap">
+                            <div class="input-group">
+                                <input class="form-input" id="forms-3-name" type="text" th:field="*{nama}" data-constraints="@Required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label-outside" for="forms-3-name">NO HANDPHONE</label>
+                        <div class="form-wrap">
+                            <div class="input-group">
+                                <input class="form-input" id="forms-3-name" type="text" th:field="*{noHp}" data-constraints="@Required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
                         <label class="form-label-outside">JENIS TAMU</label>
                         <div class="form-wrap">
                             <!-- Select 2-->
@@ -29,22 +45,6 @@
                                 <span class="input-group-text input-bg-filter" id="basic-addon1">
                             <div class="fa fa-chevron-down"></div>
                           </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label-outside" for="forms-3-name">NAMA</label>
-                        <div class="form-wrap">
-                            <div class="input-group">
-                                <input class="form-input" id="forms-3-name" type="text" th:field="*{nama}" data-constraints="@Required">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label-outside" for="forms-3-name">NO TANDA PENGENAL</label>
-                        <div class="form-wrap">
-                            <div class="input-group">
-                                <input class="form-input" id="forms-3-name" type="text" th:field="*{nomorIdentitas}" data-constraints="@Required">
                             </div>
                         </div>
                     </div>
@@ -67,18 +67,33 @@
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <label class="form-label-outside" for="forms-3-name">NO HANDPHONE</label>
+                        <label class="form-label-outside" for="forms-3-name">TANGGAL MULAI</label>
+                        <div class="form-wrap">
+                             <div class="input-group">
+                                <input class="form-input" data-time-picker="date" th:field="*{startDate}">
+                                <span class="input-group-text input-bg-filter" id="basic-addon1">
+                                    <div class="fa fa-calendar"></div>
+                                </span>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label-outside" for="forms-3-name">TANGGAL SELESAI</label>
                         <div class="form-wrap">
                             <div class="input-group">
-                                <input class="form-input" id="forms-3-name" type="text" th:field="*{noHp}" data-constraints="@Required">
+                                <input class="form-input" data-time-picker="date" th:field="*{endDate}">
+                                <span class="input-group-text input-bg-filter" id="basic-addon1">
+                                    <div class="fa fa-calendar"></div>
+                                </span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-1">
-                        <button type="submit" class="button button-icon button-icon-left button-secondary button-nina button-filter" data-toggle="tooltip" data-placement="top" title="Cari"><span class="icon fa fa-search"></span></button>
-                    </div>
+                    <div class="col-md-10"></div>
                     <div class="col-md-1">
                         <div class="button button-icon button-icon-left button-default-outline button-nina button-filter" data-toggle="tooltip" data-placement="top" title="Unduh" onclick="exportFile()"><span class="icon fa fa-download"></span></div>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="button button-icon button-icon-left button-secondary button-nina button-filter" data-toggle="tooltip" data-placement="top" title="Cari"><span class="icon fa fa-search"></span></button>
                     </div>
                 </div>
             </div>
@@ -99,11 +114,12 @@
                             <th>Alamat</th>
                             <th>ID</th>
                             <th>No ID</th>
-                            <th>Pihak</th>
-                            <th>Keperluan</th>
-                            <th>Keterangan</th>
                             <th>No HP</th>
                             <th>No Telepon</th>
+                            <th>Pihak</th>
+                            <th>Tanggal</th>
+                            <th>Keperluan</th>
+                            <th>Keterangan</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -116,17 +132,18 @@
                             <td>[[${bt.alamat}]]</td>
                             <td>[[${bt.tipeIdentitas}]]</td>
                             <td>[[${bt.nomorIdentitas}]]</td>
-                            <td>[[${bt.pihakYgDitemuiNama}]]</td>
-                            <td>[[${bt.keperluan}]]</td>
-                            <td>[[${bt.keterangan}]]</td>
                             <td>[[${bt.noHp}]]</td>
                             <td>[[${bt.noTelepon}]]</td>
+                            <td>[[${bt.pihakYgDitemuiNama}]]</td>
+                            <td>Tanggal Buku Tamu Diisi</td>
+                            <td>[[${bt.keperluan}]]</td>
+                            <td>[[${bt.keterangan}]]</td>
                             <td>
                                 <a th:href="@{'/guestbook/update/'+${bt.id}}">
-                                    <button type="button" class="button button-secondary button-nina button-action bg-success"><span class="icon fa fa-pencil"></span></button>
+                                    <button type="button" class="button button-secondary button-nina button-action bg-edit" data-toggle="tooltip" data-placement="right" title="Edit"><span class="icon fa fa-pencil" style="color:mediumaquamarine;"></span></button>
                                 </a>
                                 <a th:href="@{'/guestbook/delete/'+${bt.id}}">
-                                    <button type="button" class="button button-secondary button-nina button-action bg-danger"><span class="icon fa fa-trash"></span></button>
+                                    <button type="button" class="button button-secondary button-nina button-action bg-delete" data-toggle="tooltip" data-placement="right" title="Hapus"><span class="icon fa fa-trash" style="color:tomato;"></span></button>
                                 </a>
                             </td>
                         </tr>
