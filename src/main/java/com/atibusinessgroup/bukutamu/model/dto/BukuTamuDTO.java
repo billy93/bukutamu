@@ -2,6 +2,7 @@ package com.atibusinessgroup.bukutamu.model.dto;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Date;
 
 public interface BukuTamuDTO {
 
@@ -25,7 +26,7 @@ public interface BukuTamuDTO {
 
     public String getPihakYgDitemuiNama();
 
-    public Instant getCreatedDate();
+    public Date getCreatedDate();
 
     public String getKeterangan();
 

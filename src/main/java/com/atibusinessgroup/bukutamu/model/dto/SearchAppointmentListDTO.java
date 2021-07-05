@@ -15,6 +15,8 @@ public class SearchAppointmentListDTO implements Serializable {
     private Optional<String> nomorIdentitas =  Optional.of("");
     private Optional<String> keperluan =  Optional.of("");
     private Optional<String> noHp =  Optional.of("");
+    private Optional<String> startDate =  Optional.of("");
+    private Optional<String> endDate =  Optional.of("");
 
     public Optional<Integer> getPage() {
         return page;
@@ -70,5 +72,21 @@ public class SearchAppointmentListDTO implements Serializable {
 
     public void setNoHp(Optional<String> noHp) {
         this.noHp = noHp;
+    }
+
+    public Optional<String> getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Optional<String> startDate) {
+        this.startDate = startDate;
+    }
+
+    public Optional<String> getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Optional<String> endDate) {
+        this.endDate = endDate;
     }
 }

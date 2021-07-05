@@ -91,7 +91,7 @@ public class LoginController {
             model.addAttribute("janjiCurrent", janjiSize);
             model.addAttribute("totalCurrent", bukuTamuSize+janjiSize);
 
-            Chart grafikTamuTotal = generateGrafikTamuTotal(getBukuTamu);
+            Chart grafikTamuTotal = generateGrafikTamuTotal(getBukuTamu, getAppointment);
             Chart grafikTamu = generateGrafikTamu(getBukuTamu, getAppointment);
             Chart grafikStatistikKeperluanTamu = generateStatistikKeperluanTamu(getBukuTamu);
             model.addAttribute("grafikTamuTotal", grafikTamuTotal);
@@ -188,7 +188,7 @@ public class LoginController {
             // Tamu umum
             Chart.Data.DataPoint dp = new Chart.Data.DataPoint();
             List<BukuTamu> bukuTamus = bukuTamuList.stream().filter(e -> {
-                if(LocalDateTime.ofInstant(e.getCreatedDate(), ZoneId.systemDefault()).getMonth() == months[finalI] && e.getJenis().contentEquals("umum")){
+                if(LocalDateTime.ofInstant(e.getCreatedDate(), ZoneId.systemDefault()).getMonth() == months[finalI] && e.getJenis().contentEquals("Umum")){
                     return true;
                 }
                 return false;
@@ -202,7 +202,7 @@ public class LoginController {
             // Tamu Khusus
             Chart.Data.DataPoint dpKhusus = new Chart.Data.DataPoint();
             List<BukuTamu> bukuTamuKhusus = bukuTamuList.stream().filter(e -> {
-                if(LocalDateTime.ofInstant(e.getCreatedDate(), ZoneId.systemDefault()).getMonth() == months[finalI] && e.getJenis().contentEquals("khusus")){
+                if(LocalDateTime.ofInstant(e.getCreatedDate(), ZoneId.systemDefault()).getMonth() == months[finalI] && e.getJenis().contentEquals("Khusus")){
                     return true;
                 }
                 return false;
@@ -242,7 +242,7 @@ public class LoginController {
         return chart1;
     }
 
-    private Chart generateGrafikTamuTotal(List<BukuTamu> bukuTamuList) {
+    private Chart generateGrafikTamuTotal(List<BukuTamu> bukuTamuList, List<Appointment> getAppointment) {
         Chart chart1 = new Chart();
         chart1.setAnimationEnabled(true);
 
@@ -284,8 +284,13 @@ public class LoginController {
                 }
                 return false;
             }).collect(Collectors.toList());
-
-            dp.setY(bukuTamus.size());
+            List<Appointment> appointment = getAppointment.stream().filter(e -> {
+                if(LocalDateTime.ofInstant(e.getCreatedDate(), ZoneId.systemDefault()).getMonth() == months[finalI]){
+                    return true;
+                }
+                return false;
+            }).collect(Collectors.toList());
+            dp.setY(bukuTamus.size()+appointment.size());
             dp.setLabel(month[i]);
             dataPoints.add(dp);
             // End Tamu umum

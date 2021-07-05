@@ -18,6 +18,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,6 +66,8 @@ public class ExportService {
         header.getCell(9).setCellStyle(style);
         header.createCell(10).setCellValue("No Telepon");
         header.getCell(10).setCellStyle(style);
+        header.createCell(10).setCellValue("Tanggal");
+        header.getCell(10).setCellStyle(style);
 
         int rowCount = 1;
 
@@ -76,11 +79,16 @@ public class ExportService {
             userRow.createCell(3).setCellValue(bukuTamu.getAlamat());
             userRow.createCell(4).setCellValue(bukuTamu.getTipeIdentitas());
             userRow.createCell(5).setCellValue(bukuTamu.getNomorIdentitas());
-            userRow.createCell(6).setCellValue(bukuTamu.getPihakYgDitemui());
+            userRow.createCell(6).setCellValue(bukuTamu.getPihakYgDitemuiNama());
             userRow.createCell(7).setCellValue(bukuTamu.getKeperluan());
             userRow.createCell(8).setCellValue(bukuTamu.getKeterangan());
             userRow.createCell(9).setCellValue(bukuTamu.getNoHp());
             userRow.createCell(10).setCellValue(bukuTamu.getNoTelepon());
+            Date d = bukuTamu.getCreatedDate();
+            if(d != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+                userRow.createCell(11).setCellValue(sdf.format(d));
+            }
         }
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();

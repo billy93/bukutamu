@@ -63,21 +63,30 @@ public class AppointmentController {
     }
 
     @PostMapping("/appointment/list")
-    public String listSearch(SearchAppointmentListDTO searchAppointmentListDTO, Model model, HttpSession httpSession) {
+    public String listSearch(SearchAppointmentListDTO searchAppointmentListDTO, Model model, HttpSession httpSession) throws ParseException {
         return list(searchAppointmentListDTO, model, httpSession);
     }
 
     @GetMapping("/appointment/list")
-    public String list(SearchAppointmentListDTO searchAppointmentListDTO, Model model, HttpSession httpSession){
+    public String list(SearchAppointmentListDTO searchAppointmentListDTO, Model model, HttpSession httpSession) throws ParseException {
         Pageable page = PageRequest.of(searchAppointmentListDTO.getPage().get(), searchAppointmentListDTO.getSize().get());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        String startDate = searchAppointmentListDTO.getStartDate().get() != null && !searchAppointmentListDTO.getStartDate().get().contentEquals("") ? simpleDateFormat2.format(simpleDateFormat.parse(searchAppointmentListDTO.getStartDate().get())) :"null";
+        String endDate = searchAppointmentListDTO.getEndDate().get() != null && !searchAppointmentListDTO.getEndDate().get().contentEquals("") ? simpleDateFormat2.format(simpleDateFormat.parse(searchAppointmentListDTO.getEndDate().get())) : "null";
         Page<AppointmentDTO> appointment = appointmentRepository.findAll(
                 searchAppointmentListDTO.getJenis().get(),
                 searchAppointmentListDTO.getNama().get(),
                 searchAppointmentListDTO.getKeperluan().get(),
                 searchAppointmentListDTO.getNoHp().get(),
                 searchAppointmentListDTO.getNomorIdentitas().get(),
+                startDate,
+                endDate,
                 page);
-        model.addAttribute("appointment", appointment.getContent());
+
+        List<AppointmentDTO> appointments = appointment.getContent();
+
+        model.addAttribute("appointment", appointments);
 
         SearchAppointmentListNonOptionalDTO searchAppointmentListNonOptionalDTO = new SearchAppointmentListNonOptionalDTO();
         searchAppointmentListNonOptionalDTO.setPage(searchAppointmentListDTO.getPage().get());
@@ -86,6 +95,8 @@ public class AppointmentController {
         searchAppointmentListNonOptionalDTO.setKeperluan(searchAppointmentListDTO.getKeperluan().get());
         searchAppointmentListNonOptionalDTO.setNoHp(searchAppointmentListDTO.getNoHp().get());
         searchAppointmentListNonOptionalDTO.setNomorIdentitas(searchAppointmentListDTO.getNomorIdentitas().get());
+        searchAppointmentListNonOptionalDTO.setStartDate(searchAppointmentListDTO.getStartDate().get());
+        searchAppointmentListNonOptionalDTO.setEndDate(searchAppointmentListDTO.getEndDate().get());
         model.addAttribute("searchParam", searchAppointmentListNonOptionalDTO);
 
         int totalData = Integer.parseInt((appointment.getTotalElements())+"");
@@ -123,15 +134,20 @@ public class AppointmentController {
     }
 
     @PostMapping("/appointment/list/export")
-    public ResponseEntity<Resource> exportPolicyList(SearchAppointmentListDTO searchAppointmentListDTO) throws IOException {
+    public ResponseEntity<Resource> exportPolicyList(SearchAppointmentListDTO searchAppointmentListDTO) throws IOException, ParseException {
         Pageable page = PageRequest.of(searchAppointmentListDTO.getPage().get(), searchAppointmentListDTO.getSize().get());
-
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        String startDate = searchAppointmentListDTO.getStartDate().get() != null && !searchAppointmentListDTO.getStartDate().get().contentEquals("") ? simpleDateFormat2.format(simpleDateFormat.parse(searchAppointmentListDTO.getStartDate().get())) :"null";
+        String endDate = searchAppointmentListDTO.getEndDate().get() != null && !searchAppointmentListDTO.getEndDate().get().contentEquals("") ? simpleDateFormat2.format(simpleDateFormat.parse(searchAppointmentListDTO.getEndDate().get())) : "null";
         Page<AppointmentDTO> getAppointment = appointmentRepository.findAll(
                 searchAppointmentListDTO.getJenis().get(),
                 searchAppointmentListDTO.getNama().get(),
                 searchAppointmentListDTO.getKeperluan().get(),
                 searchAppointmentListDTO.getNoHp().get(),
                 searchAppointmentListDTO.getNomorIdentitas().get(),
+                startDate,
+                endDate,
                 page);
         Resource file = exportService.exportAppointment(getAppointment.getContent());
 

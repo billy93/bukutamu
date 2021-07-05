@@ -71,7 +71,7 @@
                         <div class="form-wrap">
                              <div class="input-group">
                                 <input class="form-input" data-time-picker="date" th:field="*{startDate}">
-                                <span class="input-group-text input-bg-filter" id="basic-addon1">
+                                <span class="input-group-text input-bg-filter">
                                     <div class="fa fa-calendar"></div>
                                 </span>
                              </div>
@@ -82,7 +82,7 @@
                         <div class="form-wrap">
                             <div class="input-group">
                                 <input class="form-input" data-time-picker="date" th:field="*{endDate}">
-                                <span class="input-group-text input-bg-filter" id="basic-addon1">
+                                <span class="input-group-text input-bg-filter">
                                     <div class="fa fa-calendar"></div>
                                 </span>
                             </div>
@@ -135,7 +135,7 @@
                             <td>[[${bt.noHp}]]</td>
                             <td>[[${bt.noTelepon}]]</td>
                             <td>[[${bt.pihakYgDitemuiNama}]]</td>
-                            <td>Tanggal Buku Tamu Diisi</td>
+                            <td>[[${#dates.format(bt.createdDate, 'dd MMM yyyy')}]]</td>
                             <td>[[${bt.keperluan}]]</td>
                             <td>[[${bt.keterangan}]]</td>
                             <td>

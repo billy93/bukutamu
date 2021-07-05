@@ -1,6 +1,7 @@
 package com.atibusinessgroup.bukutamu.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
@@ -40,109 +41,6 @@ public class BukuTamuController {
 	@Autowired
 	private ExportService exportService;
 
-//	public static class BukuTamu{
-//		private String id;
-//		private String jenis;
-//		private String nama;
-//		private String jenisKelamin;
-//		private String tipeIdentitas;
-//		private String nomorIdentitas;
-//		private String alamat;
-//		private String keperluan;
-//		private String pihakYgDitemui;
-//		private String keterangan;
-//		private String noHp;
-//		private String noTelepon;
-//
-//		public String getId() {
-//			return id;
-//		}
-//
-//		public void setId(String id) {
-//			this.id = id;
-//		}
-//
-//		public String getJenis() {
-//			return jenis;
-//		}
-//		public void setJenis(String jenis) {
-//			this.jenis = jenis;
-//		}
-//		public String getNama() {
-//			return nama;
-//		}
-//		public void setNama(String nama) {
-//			this.nama = nama;
-//		}
-//		public String getJenisKelamin() {
-//			return jenisKelamin;
-//		}
-//		public void setJenisKelamin(String jenisKelamin) {
-//			this.jenisKelamin = jenisKelamin;
-//		}
-//		public String getTipeIdentitas() {
-//			return tipeIdentitas;
-//		}
-//		public void setTipeIdentitas(String tipeIdentitas) {
-//			this.tipeIdentitas = tipeIdentitas;
-//		}
-//		public String getNomorIdentitas() {
-//			return nomorIdentitas;
-//		}
-//		public void setNomorIdentitas(String nomorIdentitas) {
-//			this.nomorIdentitas = nomorIdentitas;
-//		}
-//		public String getAlamat() {
-//			return alamat;
-//		}
-//		public void setAlamat(String alamat) {
-//			this.alamat = alamat;
-//		}
-//		public String getKeperluan() {
-//			return keperluan;
-//		}
-//		public void setKeperluan(String keperluan) {
-//			this.keperluan = keperluan;
-//		}
-//		public String getPihakYgDitemui() {
-//			return pihakYgDitemui;
-//		}
-//		public void setPihakYgDitemui(String pihakYgDitemui) {
-//			this.pihakYgDitemui = pihakYgDitemui;
-//		}
-//
-//		public String getKeterangan() {
-//			return keterangan;
-//		}
-//
-//		public void setKeterangan(String keterangan) {
-//			this.keterangan = keterangan;
-//		}
-//
-//		public String getNoHp() {
-//			return noHp;
-//		}
-//
-//		public void setNoHp(String noHp) {
-//			this.noHp = noHp;
-//		}
-//
-//		public String getNoTelepon() {
-//			return noTelepon;
-//		}
-//
-//		public void setNoTelepon(String noTelepon) {
-//			this.noTelepon = noTelepon;
-//		}
-//
-//		@Override
-//		public String toString() {
-//			return "BukuTamu [jenis=" + jenis + ", nama=" + nama + ", jenisKelamin=" + jenisKelamin + ", tipeIdentitas="
-//					+ tipeIdentitas + ", nomorIdentitas=" + nomorIdentitas + ", alamat=" + alamat + ", keperluan="
-//					+ keperluan + ", pihakYgDitemui=" + pihakYgDitemui + "]";
-//		}
-//	}
-
 	@GetMapping("/guestbook")
 	public String index(Model model){
 		List<Pegawai> pegawaiList = pegawaiRepository.findAll();
@@ -163,22 +61,31 @@ public class BukuTamuController {
 	}
 
 	@PostMapping("/guestbook/list")
-	public String listSearch(SearchGuestbookListDTO searchGuestbookListDTO, Model model, HttpSession httpSession) {
+	public String listSearch(SearchGuestbookListDTO searchGuestbookListDTO, Model model, HttpSession httpSession) throws ParseException {
 		return list(searchGuestbookListDTO, model, httpSession);
 	}
 
 	@PostMapping("/guestbook/list/export")
-	public ResponseEntity<Resource> exportPolicyList(SearchGuestbookListDTO searchGuestbookListDTO) throws IOException {
+	public ResponseEntity<Resource> exportPolicyList(SearchGuestbookListDTO searchGuestbookListDTO) throws IOException, ParseException {
 		Pageable page = PageRequest.of(searchGuestbookListDTO.getPage().get(), searchGuestbookListDTO.getSize().get());
 
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+
 		Page<BukuTamuDTO> getBukuTamu = bukuTamuRepository.findAll(
-				searchGuestbookListDTO.getJenis().get(),
-				searchGuestbookListDTO.getNama().get(),
-				searchGuestbookListDTO.getKeperluan().get(),
-				searchGuestbookListDTO.getNoHp().get(),
-				searchGuestbookListDTO.getNomorIdentitas().get(),
-				page);
-		Resource file = exportService.exportBukuTamu(getBukuTamu.getContent());
+					searchGuestbookListDTO.getJenis().get(),
+					searchGuestbookListDTO.getNama().get(),
+					searchGuestbookListDTO.getKeperluan().get(),
+					searchGuestbookListDTO.getNoHp().get(),
+					searchGuestbookListDTO.getNomorIdentitas().get(),
+					searchGuestbookListDTO.getStartDate().get() != null && !searchGuestbookListDTO.getStartDate().get().contentEquals("") ? simpleDateFormat2.format(simpleDateFormat.parse(searchGuestbookListDTO.getStartDate().get())) : null,
+					searchGuestbookListDTO.getEndDate().get() != null && !searchGuestbookListDTO.getEndDate().get().contentEquals("") ? simpleDateFormat2.format(simpleDateFormat.parse(searchGuestbookListDTO.getEndDate().get())) : null,
+					page);
+
+
+		List<BukuTamuDTO> bukuTamus = getBukuTamu.getContent();
+
+		Resource file = exportService.exportBukuTamu(bukuTamus);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String filename = "BukuTamu_"+sdf.format(new Date())+".xlsx";
@@ -192,16 +99,27 @@ public class BukuTamuController {
 	}
 
 	@GetMapping("/guestbook/list")
-	public String list(SearchGuestbookListDTO searchGuestbookListDTO, Model model, HttpSession httpSession){
+	public String list(SearchGuestbookListDTO searchGuestbookListDTO, Model model, HttpSession httpSession) throws ParseException {
 		Pageable page = PageRequest.of(searchGuestbookListDTO.getPage().get(), searchGuestbookListDTO.getSize().get());
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+
+//		String startDate = "2021-07-02";
+//		String endDate = "2021-07-03";
+		String startDate = searchGuestbookListDTO.getStartDate().get() != null && !searchGuestbookListDTO.getStartDate().get().contentEquals("") ? simpleDateFormat2.format(simpleDateFormat.parse(searchGuestbookListDTO.getStartDate().get())) :"null";
+		String endDate = searchGuestbookListDTO.getEndDate().get() != null && !searchGuestbookListDTO.getEndDate().get().contentEquals("") ? simpleDateFormat2.format(simpleDateFormat.parse(searchGuestbookListDTO.getEndDate().get())) : "null";
 		Page<BukuTamuDTO> getBukuTamu = bukuTamuRepository.findAll(
 				searchGuestbookListDTO.getJenis().get(),
 				searchGuestbookListDTO.getNama().get(),
 				searchGuestbookListDTO.getKeperluan().get(),
 				searchGuestbookListDTO.getNoHp().get(),
 				searchGuestbookListDTO.getNomorIdentitas().get(),
+				startDate,
+				endDate,
 				page);
-		model.addAttribute("bukuTamu", getBukuTamu.getContent());
+
+		List<BukuTamuDTO> bukuTamus = getBukuTamu.getContent();
+		model.addAttribute("bukuTamu", bukuTamus);
 
 		SearchGuestbookListNonOptionalDTO searchGuestbookListNonOptionalDTO = new SearchGuestbookListNonOptionalDTO();
 		searchGuestbookListNonOptionalDTO.setPage(searchGuestbookListDTO.getPage().get());
@@ -210,6 +128,8 @@ public class BukuTamuController {
 		searchGuestbookListNonOptionalDTO.setKeperluan(searchGuestbookListDTO.getKeperluan().get());
 		searchGuestbookListNonOptionalDTO.setNoHp(searchGuestbookListDTO.getNoHp().get());
 		searchGuestbookListNonOptionalDTO.setNomorIdentitas(searchGuestbookListDTO.getNomorIdentitas().get());
+		searchGuestbookListNonOptionalDTO.setStartDate(searchGuestbookListDTO.getStartDate().get());
+		searchGuestbookListNonOptionalDTO.setEndDate(searchGuestbookListDTO.getEndDate().get());
 		model.addAttribute("searchParam", searchGuestbookListNonOptionalDTO);
 
 		int totalData = Integer.parseInt((getBukuTamu.getTotalElements())+"");

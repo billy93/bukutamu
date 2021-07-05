@@ -13,6 +13,7 @@ import com.atibusinessgroup.bukutamu.model.BukuTamu;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.time.Instant;
+import java.util.Date;
 
 @Repository
 public interface BukuTamuRepository extends JpaRepository<BukuTamu, Long>, PagingAndSortingRepository<BukuTamu, Long> {
@@ -26,7 +27,10 @@ public interface BukuTamuRepository extends JpaRepository<BukuTamu, Long>, Pagin
             "(?2 IS NULL OR ?2='' OR b.nama LIKE CONCAT('%', ?2, '%')) AND "+
             "(?3 IS NULL OR ?3='' OR b.keperluan LIKE CONCAT('%', ?3, '%')) AND "+
             "(?4 IS NULL OR ?4='' OR b.no_hp LIKE CONCAT('%', ?4, '%')) AND " +
-            "(?5 IS NULL OR ?5='' OR b.nomor_identitas LIKE CONCAT('%', ?5, '%'))"
+            "(?5 IS NULL OR ?5='' OR b.nomor_identitas LIKE CONCAT('%', ?5, '%')) AND "+
+            "(CASE WHEN ?6='null' THEN TRUE ELSE b.created_date >= cast(?6 as date) end) AND "+
+            "(CASE WHEN ?7='null' THEN TRUE ELSE b.created_date <= cast(?7 as date) end) "
+//            "(cast(?7 as date) IS NULL OR b.created_date <= cast(?7 as date))"
             ,
             countQuery = "SELECT count(*) from buku_tamu " +
                     "left join pegawai p on p.id = b.pihak_yg_ditemui "+
@@ -34,7 +38,10 @@ public interface BukuTamuRepository extends JpaRepository<BukuTamu, Long>, Pagin
                     "(?2 IS NULL OR ?2='' OR b.nama LIKE CONCAT('%', ?2, '%')) AND " +
                     "(?3 IS NULL OR ?3='' OR b.keperluan LIKE CONCAT('%', ?3, '%')) AND "+
                     "(?4 IS NULL OR ?4='' OR b.no_hp LIKE CONCAT('%', ?4, '%')) AND " +
-                    "(?5 IS NULL OR ?5='' OR b.nomor_identitas LIKE CONCAT('%', ?5, '%'))"
+                    "(?5 IS NULL OR ?5='' OR b.nomor_identitas LIKE CONCAT('%', ?5, '%')) AND"+
+                    "(CASE WHEN ?6='null' THEN TRUE ELSE b.created_date >= cast(?6 as date) end) AND "+
+                    "(CASE WHEN ?7='null' THEN TRUE ELSE b.created_date <= cast(?7 as date) end) "
+//                    "(cast(?7 as date) IS NULL OR b.created_date <= cast(?7 as date))"
             , nativeQuery = true)
-    Page<BukuTamuDTO> findAll(String jenis, String nama, String keperluan, String noHp, String nomorIdentitas, Pageable page);
+    Page<BukuTamuDTO> findAll(String jenis, String nama, String keperluan, String noHp, String nomorIdentitas, String startDate, String endDate, Pageable page);
 }
