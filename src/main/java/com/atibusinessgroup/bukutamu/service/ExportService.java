@@ -154,7 +154,7 @@ public class ExportService {
             userRow.createCell(3).setCellValue(appointment.getAlamat());
             userRow.createCell(4).setCellValue(appointment.getTipeIdentitas());
             userRow.createCell(5).setCellValue(appointment.getNomorIdentitas());
-            userRow.createCell(6).setCellValue(appointment.getPihakYgDitemui());
+            userRow.createCell(6).setCellValue(appointment.getPihakYgDitemuiNama());
             userRow.createCell(7).setCellValue(appointment.getKeperluan());
             userRow.createCell(8).setCellValue(appointment.getKeterangan());
             userRow.createCell(9).setCellValue(appointment.getNoHp());
