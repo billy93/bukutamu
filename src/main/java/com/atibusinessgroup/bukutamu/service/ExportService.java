@@ -66,8 +66,8 @@ public class ExportService {
         header.getCell(9).setCellStyle(style);
         header.createCell(10).setCellValue("No Telepon");
         header.getCell(10).setCellStyle(style);
-        header.createCell(10).setCellValue("Tanggal");
-        header.getCell(10).setCellStyle(style);
+        header.createCell(11).setCellValue("Tanggal");
+        header.getCell(11).setCellStyle(style);
 
         int rowCount = 1;
 

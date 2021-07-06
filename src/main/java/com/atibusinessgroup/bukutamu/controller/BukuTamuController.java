@@ -78,8 +78,8 @@ public class BukuTamuController {
 					searchGuestbookListDTO.getKeperluan().get(),
 					searchGuestbookListDTO.getNoHp().get(),
 					searchGuestbookListDTO.getNomorIdentitas().get(),
-					searchGuestbookListDTO.getStartDate().get() != null && !searchGuestbookListDTO.getStartDate().get().contentEquals("") ? simpleDateFormat2.format(simpleDateFormat.parse(searchGuestbookListDTO.getStartDate().get())) : null,
-					searchGuestbookListDTO.getEndDate().get() != null && !searchGuestbookListDTO.getEndDate().get().contentEquals("") ? simpleDateFormat2.format(simpleDateFormat.parse(searchGuestbookListDTO.getEndDate().get())) : null,
+					searchGuestbookListDTO.getStartDate().get() != null && !searchGuestbookListDTO.getStartDate().get().contentEquals("") ? simpleDateFormat2.format(simpleDateFormat.parse(searchGuestbookListDTO.getStartDate().get())) : "null",
+					searchGuestbookListDTO.getEndDate().get() != null && !searchGuestbookListDTO.getEndDate().get().contentEquals("") ? simpleDateFormat2.format(simpleDateFormat.parse(searchGuestbookListDTO.getEndDate().get())) : "null",
 					page);
 
 
