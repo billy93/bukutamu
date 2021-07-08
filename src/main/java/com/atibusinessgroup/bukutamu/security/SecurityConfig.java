@@ -6,11 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -25,6 +27,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import com.atibusinessgroup.bukutamu.filter.SimpleAuthenticationFilter;
 import com.atibusinessgroup.bukutamu.filter.UserTravellerAuthenticationFilter;
 
+import javax.sql.DataSource;
+
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -32,56 +36,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         super();
     }
 
-//    @Autowired
-//    private CustomAuthenticationProvider authProvider;
-//
-//    @Autowired
-//    private CustomUserTravellerAuthenticationProvider userTravellerAuthProvider;
-//
-//    @Autowired
-//    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
-//
-//    @Autowired
-//    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-//
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.authenticationProvider(authProvider);
-//    }
-//
-//    @Bean
-//    @Override
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
-//
-//    @Bean
-//    public PasswordEncoder encoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//
-//    @Bean
-//    public LogoutSuccessHandler logoutSuccessHandler() {
-//        return new CustomizeLogoutSuccessHandler();
-//    }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        PasswordEncoder encoder =
-//                PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//        auth
-//                .inMemoryAuthentication()
-//                .withUser("admin")
-//                .password("admin")
-////                .password(encoder.encode("admin"))
-//                .roles("ADMIN");
-//    }
+    @Autowired
+    private DataSource dataSource;
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new CustomUserDetailsService();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
+
+        return authProvider;
+    }
 
     @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin").password("{noop}admin").roles("ADMIN");
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authenticationProvider());
     }
+
+//    @Override
+//    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("admin").password("{noop}admin").roles("ADMIN");
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

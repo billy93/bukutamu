@@ -54,6 +54,8 @@
 									</li>
 									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')"  th:classappend="${#httpServletRequest.requestURI == '/pegawai/list' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/pegawai/list}"><span class="fa fa-users"></span> Daftar Pegawai</a>
 									</li>
+									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')"  th:classappend="${#httpServletRequest.requestURI == '/user/list' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/user/list}"><span class="fa fa-users"></span>  User</a>
+									</li>
 									<li class="rd-nav-item" sec:authorize="hasRole('ADMIN')" th:classappend="${#httpServletRequest.requestURI == '/report' ? 'active' : ''}"><a class="rd-nav-link" th:href="@{/report}"><span class="fa fa-table"></span> Laporan</a>
 									</li>
 								</ul>
