@@ -29,7 +29,9 @@ public interface BukuTamuRepository extends JpaRepository<BukuTamu, Long>, Pagin
             "(?4 IS NULL OR ?4='' OR b.no_hp LIKE CONCAT('%', ?4, '%')) AND " +
             "(?5 IS NULL OR ?5='' OR b.nomor_identitas LIKE CONCAT('%', ?5, '%')) AND "+
             "(CASE WHEN ?6='null' THEN TRUE ELSE b.created_date >= cast(?6 as date) end) AND "+
-            "(CASE WHEN ?7='null' THEN TRUE ELSE b.created_date <= cast(?7 as date) end) "
+            "(CASE WHEN ?7='null' THEN TRUE ELSE b.created_date <= cast(?7 as date) end) "+
+            "order by b.created_date desc"
+
 //            "(cast(?7 as date) IS NULL OR b.created_date <= cast(?7 as date))"
             ,
             countQuery = "SELECT count(*) from buku_tamu " +
@@ -40,7 +42,8 @@ public interface BukuTamuRepository extends JpaRepository<BukuTamu, Long>, Pagin
                     "(?4 IS NULL OR ?4='' OR b.no_hp LIKE CONCAT('%', ?4, '%')) AND " +
                     "(?5 IS NULL OR ?5='' OR b.nomor_identitas LIKE CONCAT('%', ?5, '%')) AND"+
                     "(CASE WHEN ?6='null' THEN TRUE ELSE b.created_date >= cast(?6 as date) end) AND "+
-                    "(CASE WHEN ?7='null' THEN TRUE ELSE b.created_date <= cast(?7 as date) end) "
+                    "(CASE WHEN ?7='null' THEN TRUE ELSE b.created_date <= cast(?7 as date) end) "+
+                    "order by b.created_date desc"
 //                    "(cast(?7 as date) IS NULL OR b.created_date <= cast(?7 as date))"
             , nativeQuery = true)
     Page<BukuTamuDTO> findAll(String jenis, String nama, String keperluan, String noHp, String nomorIdentitas, String startDate, String endDate, Pageable page);

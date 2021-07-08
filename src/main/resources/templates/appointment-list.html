@@ -123,6 +123,7 @@
                                   <th>Keperluan</th>
                                   <th>Keterangan</th>
                                   <th>Tanggal & Jam</th>
+                                  <th>Tanggal Dibuat</th>
                                   <th>Status</th>
                                   <th width="150">Terima/Tolak</th>
                                   <th width="150">Action</th>
@@ -143,6 +144,7 @@
                                 <td>[[${bt.keperluan}]]</td>
                                 <td>[[${bt.keterangan}]]</td>
                                 <td>[[${bt.janjiTemuDate != null ? #dates.format(bt.janjiTemuDate, 'dd-MMM-yyyy HH:mm') : ''}]]</td>
+                                <td>[[${bt.createdDate != null ? #dates.format(bt.createdDate, 'dd-MMM-yyyy HH:mm') : ''}]]</td>
                                 <td>
                                     <span th:if="${bt.approved == 1}">Diterima</span>
                                     <span th:if="${bt.approved == 0}">Ditolak</span>

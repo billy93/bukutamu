@@ -24,7 +24,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long>,
             "(?4 IS NULL OR ?4='' OR b.no_hp LIKE CONCAT('%', ?4, '%')) AND " +
             "(?5 IS NULL OR ?5='' OR b.nomor_identitas LIKE CONCAT('%', ?5, '%')) AND "+
             "(CASE WHEN ?6='null' THEN TRUE ELSE b.janji_temu_date >= cast(?6 as date) end) AND "+
-            "(CASE WHEN ?7='null' THEN TRUE ELSE b.janji_temu_date <= cast(?7 as date) end) "
+            "(CASE WHEN ?7='null' THEN TRUE ELSE b.janji_temu_date <= cast(?7 as date) end) "+
+            "order by b.created_date desc"
             ,
             countQuery = "SELECT count(*) from buku_tamu " +
                     "left join pegawai p on p.id = b.pihak_yg_ditemui "+
@@ -34,7 +35,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long>,
                     "(?4 IS NULL OR ?4='' OR b.no_hp LIKE CONCAT('%', ?4, '%')) AND " +
                     "(?5 IS NULL OR ?5='' OR b.nomor_identitas LIKE CONCAT('%', ?5, '%')) AND "+
                     "(CASE WHEN ?6='null' THEN TRUE ELSE b.janji_temu_date >= cast(?6 as date) end) AND "+
-                    "(CASE WHEN ?7='null' THEN TRUE ELSE b.janji_temu_date <= cast(?7 as date) end) "
+                    "(CASE WHEN ?7='null' THEN TRUE ELSE b.janji_temu_date <= cast(?7 as date) end) "+
+                    "order by b.created_date desc"
             , nativeQuery = true)
     Page<AppointmentDTO> findAll(String jenis, String nama, String keperluan, String noHp, String nomorIdentitas, String startDate, String endDate, Pageable page);
 }
