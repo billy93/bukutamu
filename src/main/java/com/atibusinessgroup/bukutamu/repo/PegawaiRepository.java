@@ -18,7 +18,7 @@ public interface PegawaiRepository extends JpaRepository<Pegawai, Long>, PagingA
             "(?1 IS NULL OR ?1='' OR b.nama LIKE CONCAT('%', ?1, '%')) AND "+
             "(?2 IS NULL OR ?2='' OR b.jabatan LIKE CONCAT('%', ?2, '%'))"
             ,
-            countQuery = "SELECT count(*) from pegawai " +
+            countQuery = "SELECT count(*) from pegawai b " +
                     "where " +
                     "(?1 IS NULL OR ?1='' OR b.nama LIKE CONCAT('%', ?1, '%')) AND "+
                     "(?2 IS NULL OR ?2='' OR b.jabatan LIKE CONCAT('%', ?2, '%'))"

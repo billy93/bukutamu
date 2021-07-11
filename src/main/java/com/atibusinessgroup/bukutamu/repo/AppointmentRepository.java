@@ -27,7 +27,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long>,
             "(CASE WHEN ?7='null' THEN TRUE ELSE b.janji_temu_date <= cast(?7 as date) end) "+
             "order by b.created_date desc"
             ,
-            countQuery = "SELECT count(*) from buku_tamu " +
+            countQuery = "SELECT count(*) from buku_tamu b " +
                     "left join pegawai p on p.id = b.pihak_yg_ditemui "+
                     "where (?1 IS NULL OR ?1='' OR b.jenis  = ?1) AND " +
                     "(?2 IS NULL OR ?2='' OR b.nama LIKE CONCAT('%', ?2, '%')) AND " +

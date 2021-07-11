@@ -34,7 +34,7 @@ public interface BukuTamuRepository extends JpaRepository<BukuTamu, Long>, Pagin
 
 //            "(cast(?7 as date) IS NULL OR b.created_date <= cast(?7 as date))"
             ,
-            countQuery = "SELECT count(*) from buku_tamu " +
+            countQuery = "SELECT count(*) from buku_tamu b " +
                     "left join pegawai p on p.id = b.pihak_yg_ditemui "+
                     "where (?1 IS NULL OR ?1='' OR b.jenis  = ?1) AND " +
                     "(?2 IS NULL OR ?2='' OR b.nama LIKE CONCAT('%', ?2, '%')) AND " +

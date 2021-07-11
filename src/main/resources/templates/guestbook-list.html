@@ -159,8 +159,8 @@
                                         <
                                     </a>
                                 </li>
-                                <li th:classappend="${page == currentPage+1 ? 'active':''}">
-                                    <a th:each="page : ${pageNumbers}" th:onclick="'paginationLink(\'' + @{${page}-1} + '\')'">
+                                <li th:each="page : ${pageNumbers}" th:classappend="${page == currentPage+1 ? 'active':''}">
+                                    <a  th:onclick="'paginationLink(\'' + @{${page}-1} + '\')'">
                                         [[${page}]]
                                     </a>
                                 </li>
